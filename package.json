@@ -1,0 +1,12 @@
+{
+  "name": "iran-war-news",
+  "version": "1.0.0",
+  "description": "Iran War News Aggregator - Live feed from 50+ sources",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

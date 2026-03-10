@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מרכז החדשות | מלחמת איראן-ישראל-ארה"ב 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #22223a;
+            --accent-red: #e63946;
+            --accent-blue: #457b9d;
+            --accent-gold: #f4a261;
+            --accent-green: #2a9d8f;
+            --text-primary: #edf2f4;
+            --text-secondary: #8d99ae;
+            --border-color: #2a2a3e;
+            --gradient-war: linear-gradient(135deg, #e63946, #ff6b35, #f4a261);
+            --gradient-iran: linear-gradient(135deg, #239b56, #ffffff, #c0392b);
+            --gradient-israel: linear-gradient(135deg, #1a5276, #ffffff, #1a5276);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* BREAKING NEWS TICKER */
+        .breaking-ticker {
+            background: var(--accent-red);
+            color: white;
+            padding: 8px 0;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: ticker 45s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
+        }
+
+        .ticker-content span {
+            padding: 0 40px;
+        }
+
+        .ticker-content span::before {
+            content: "🔴 ";
+        }
+
+        /* HEADER */
+        header {
+            margin-top: 36px;
+            background: var(--bg-secondary);
+            border-bottom: 3px solid var(--accent-red);
+            padding: 20px 0;
+            position: sticky;
+            top: 36px;
+            z-index: 900;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-area .live-dot {
+            width: 14px;
+            height: 14px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 10px rgba(230, 57, 70, 0); }
+        }
+
+        .logo-area h1 {
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--gradient-war);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-area .subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px 16px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .stat-box .number {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent-red);
+        }
+
+        .stat-box .label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .last-update {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .last-update #update-time {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        /* NAV TABS */
+        .nav-tabs {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 130px;
+            z-index: 800;
+        }
+
+        .nav-tab {
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-tab:hover, .nav-tab.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--accent-red);
+            background: rgba(230, 57, 70, 0.1);
+        }
+
+        .nav-tab .flag {
+            margin-left: 6px;
+            font-style: normal;
+        }
+
+        /* MAIN LAYOUT */
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sidebar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            transition: transform 0.2s;
+        }
+
+        .sidebar-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .sidebar-card h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent-red);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .source-list {
+            list-style: none;
+        }
+
+        .source-list li {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .source-list li:last-child {
+            border-bottom: none;
+        }
+
+        .source-list a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+
+        .source-list a:hover {
+            color: var(--accent-gold);
+        }
+
+        .source-list .badge {
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .badge-state { background: rgba(230, 57, 70, 0.2); color: var(--accent-red); }
+        .badge-independent { background: rgba(42, 157, 143, 0.2); color: var(--accent-green); }
+        .badge-intl { background: rgba(69, 123, 157, 0.2); color: var(--accent-blue); }
+        .badge-israeli { background: rgba(244, 162, 97, 0.2); color: var(--accent-gold); }
+
+        /* MAIN FEED */
+        .main-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .feed-section {
+            display: none;
+        }
+
+        .feed-section.active {
+            display: block;
+        }
+
+        .section-header {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .section-header .count {
+            background: var(--accent-red);
+            color: white;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        /* NEWS CARDS */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 15px;
+        }
+
+        .news-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-red);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .news-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .news-card .source-tag {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .news-card .source-tag .time {
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-right: auto;
+        }
+
+        .news-card h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .news-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-card .card-footer {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+
+        .news-card .read-more {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        .news-card .translate-btn {
+            background: rgba(244, 162, 97, 0.15);
+            color: var(--accent-gold);
+            border: 1px solid rgba(244, 162, 97, 0.3);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            cursor: pointer;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        .news-card .translate-btn:hover {
+            background: rgba(244, 162, 97, 0.3);
+        }
+
+        .news-card.featured {
+            grid-column: span 2;
+            border-color: var(--accent-red);
+        }
+
+        @media (max-width: 768px) {
+            .news-card.featured {
+                grid-column: span 1;
+            }
+        }
+
+        .news-card.featured::before {
+            width: 6px;
+            background: var(--gradient-war);
+        }
+
+        .news-card.featured h4 {
+            font-size: 18px;
+        }
+
+        /* LOADING SPINNER */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent-red);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* CASUALTY TRACKER */
+        .casualty-tracker {
+            background: linear-gradient(135deg, #1a0a0a, #0a0a1a);
+            border: 1px solid rgba(230, 57, 70, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .casualty-tracker h3 {
+            color: var(--accent-red);
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .casualty-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .casualty-row:last-child {
+            border-bottom: none;
+        }
+
+        .casualty-row .country {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .casualty-row .count {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--accent-red);
+        }
+
+        /* TIMELINE */
+        .timeline {
+            position: relative;
+            padding-right: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 5px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 10px 20px 10px 0;
+            font-size: 12px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -1px;
+            top: 14px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            border: 2px solid var(--bg-card);
+        }
+
+        .timeline-item .time {
+            color: var(--accent-gold);
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .timeline-item .event {
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* MAP EMBED AREA */
+        .map-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            color: var(--text-secondary);
+        }
+
+        .map-container .map-icon {
+            font-size: 48px;
+        }
+
+        /* SEARCH */
+        .search-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'Rubik', sans-serif;
+            outline: none;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .search-bar button {
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-family: 'Rubik', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 30px 20px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        footer .disclaimer {
+            color: var(--accent-gold);
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        /* REFRESH BTN */
+        .refresh-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(230, 57, 70, 0.4);
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        .refresh-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .refresh-btn.spinning {
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* AUTO-TRANSLATE TOGGLE */
+        .translate-toggle {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .translate-toggle label {
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--accent-green);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(-20px);
+        }
+
+        /* ERROR STATE */
+        .feed-error {
+            background: rgba(230, 57, 70, 0.1);
+            border: 1px solid rgba(230, 57, 70, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            color: var(--accent-red);
+            font-size: 13px;
+        }
+
+        .direct-links-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .direct-link {
+            display: block;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .direct-link:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent-gold);
+        }
+
+        .direct-link .link-flag {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- BREAKING NEWS TICKER -->
+    <div class="breaking-ticker">
+        <div class="ticker-content">
+            <span>יום 11 למלחמה: איראן ממנה מנהיג עליון חדש - מוג'תבא חמינאי</span>
+            <span>טראמפ דורש "כניעה ללא תנאי" מאיראן</span>
+            <span>מעל 1,332 הרוגים מתחילת המתקפה ב-28 בפברואר</span>
+            <span>מחירי הנפט מתקרבים ל-120$ לחבית</span>
+            <span>8 חיילים אמריקאים נהרגו עד כה</span>
+            <span>394 הרוגים בלבנון כולל 83 ילדים</span>
+            <span>חיזבאללה יורה רקטות לצפון ישראל בתגובה</span>
+            <span>רוסיה מסייעת לאיראן - מספר ההרוגים עולה</span>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-inner">
+            <div class="logo-area">
+                <div class="live-dot"></div>
+                <div>
+                    <h1>מרכז החדשות | מלחמת איראן 2026</h1>
+                    <div class="subtitle">אגרגטור חדשות בזמן אמת מ-50+ מקורות בינלאומיים | פרסית → עברית</div>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-box">
+                    <div class="number">11</div>
+                    <div class="label">ימי מלחמה</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number" id="total-killed">1,332+</div>
+                    <div class="label">הרוגים</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number" id="source-count">0</div>
+                    <div class="label">כתבות נטענו</div>
+                </div>
+            </div>
+            <div class="last-update">
+                עדכון אחרון: <span id="update-time">טוען...</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAV TABS -->
+    <div class="nav-tabs">
+        <div class="nav-tab active" data-tab="all">הכל</div>
+        <div class="nav-tab" data-tab="iran-state"><em class="flag">🇮🇷</em> תקשורת איראנית ממלכתית</div>
+        <div class="nav-tab" data-tab="iran-independent"><em class="flag">🇮🇷</em> איראן עצמאית</div>
+        <div class="nav-tab" data-tab="arabic"><em class="flag">🌍</em> ערבית / מזה"ת</div>
+        <div class="nav-tab" data-tab="western"><em class="flag">🇺🇸🇬🇧</em> מערבי</div>
+        <div class="nav-tab" data-tab="israeli"><em class="flag">🇮🇱</em> ישראלי</div>
+        <div class="nav-tab" data-tab="russian"><em class="flag">🇷🇺🇨🇳</em> רוסיה / סין</div>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="main-container">
+        <!-- RIGHT SIDEBAR -->
+        <div class="sidebar">
+            <!-- Casualty Tracker -->
+            <div class="casualty-tracker">
+                <h3>📊 מעקב נפגעים - עדכון שוטף</h3>
+                <div class="casualty-row">
+                    <span class="country">🇮🇷 איראן</span>
+                    <span class="count">1,230+</span>
+                </div>
+                <div class="casualty-row">
+                    <span class="country">🇱🇧 לבנון</span>
+                    <span class="count">394</span>
+                </div>
+                <div class="casualty-row">
+                    <span class="country">🇮🇱 ישראל</span>
+                    <span class="count">12</span>
+                </div>
+                <div class="casualty-row">
+                    <span class="country">🇺🇸 ארה"ב (חיילים)</span>
+                    <span class="count">8</span>
+                </div>
+                <div class="casualty-row">
+                    <span class="country">🇮🇱 פצועים בישראל</span>
+                    <span class="count">2,142</span>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="sidebar-card">
+                <h3>📅 ציר זמן המלחמה</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="time">28 פבר' 2026</div>
+                        <div class="event">ישראל וארה"ב תוקפות את איראן. חמינאי נהרג בתקיפה.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time">1 מרץ</div>
+                        <div class="event">איראן תוקפת בסיס אמריקאי בסעודיה. טיל בליסטי פוגע.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time">2 מרץ</div>
+                        <div class="event">חיזבאללה יורה רקטות לצפון ישראל בתגובה.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time">6 מרץ</div>
+                        <div class="event">ישראל תוקפת בירות וטהרן. טראמפ דורש כניעה.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time">9 מרץ</div>
+                        <div class="event">מוג'תבא חמינאי מונה כמנהיג העליון החדש של איראן.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time">10 מרץ</div>
+                        <div class="event">איראן נשבעת להשתמש בטילים חזקים, דוחה שיחות עם טראמפ.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="חיפוש בכתבות...">
+                <button onclick="filterNews()">חפש</button>
+            </div>
+
+            <!-- Auto-translate toggle -->
+            <div class="translate-toggle">
+                <label>תרגום אוטומטי לעברית</label>
+                <div class="toggle-switch active" id="auto-translate" onclick="toggleTranslate()"></div>
+            </div>
+
+            <!-- Iranian State Sources -->
+            <div class="sidebar-card">
+                <h3>🇮🇷 מקורות איראניים ממלכתיים</h3>
+                <ul class="source-list">
+                    <li><a href="https://www.presstv.ir/" target="_blank"><span class="badge badge-state">ממלכתי</span> Press TV (אנגלית)</a></li>
+                    <li><a href="https://en.irna.ir/" target="_blank"><span class="badge badge-state">ממלכתי</span> IRNA - סוכנות הידיעות</a></li>
+                    <li><a href="https://en.mehrnews.com/" target="_blank"><span class="badge badge-state">ממלכתי</span> Mehr News (אנגלית)</a></li>
+                    <li><a href="https://www.tasnimnews.com/en" target="_blank"><span class="badge badge-state">ממלכתי</span> Tasnim News</a></li>
+                    <li><a href="https://iranpress.com/" target="_blank"><span class="badge badge-state">ממלכתי</span> Iran Press</a></li>
+                    <li><a href="https://en.farsnews.ir/" target="_blank"><span class="badge badge-state">ממלכתי</span> Fars News (אנגלית)</a></li>
+                    <li><a href="https://www.tehrantimes.com/" target="_blank"><span class="badge badge-state">ממלכתי</span> Tehran Times</a></li>
+                    <li><a href="https://www.isna.ir/service/Foreign" target="_blank"><span class="badge badge-state">ממלכתי</span> ISNA - סוכנות סטודנטים</a></li>
+                </ul>
+            </div>
+
+            <!-- Iranian Independent Sources -->
+            <div class="sidebar-card">
+                <h3>🗽 מקורות איראניים עצמאיים</h3>
+                <ul class="source-list">
+                    <li><a href="https://www.iranintl.com/en" target="_blank"><span class="badge badge-independent">עצמאי</span> Iran International (לונדון)</a></li>
+                    <li><a href="https://iranwire.com/en/" target="_blank"><span class="badge badge-independent">עצמאי</span> IranWire</a></li>
+                    <li><a href="https://en.radiofarda.com/" target="_blank"><span class="badge badge-independent">עצמאי</span> Radio Farda (רדיו חופשי)</a></li>
+                    <li><a href="https://www.radiozamaneh.com/english/" target="_blank"><span class="badge badge-independent">עצמאי</span> Radio Zamaneh</a></li>
+                    <li><a href="https://irannewsdaily.com/" target="_blank"><span class="badge badge-independent">עצמאי</span> Iran News Daily</a></li>
+                    <li><a href="https://kayhanlife.com/" target="_blank"><span class="badge badge-independent">עצמאי</span> Kayhan Life</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- MAIN FEED -->
+        <div class="main-feed">
+            <!-- ALL Section -->
+            <div class="feed-section active" id="section-all">
+                <div class="section-header">
+                    <h2>📰 כל החדשות - זרם חי</h2>
+                    <span class="count" id="all-count">טוען...</span>
+                </div>
+                <div class="news-grid" id="feed-all">
+                    <div class="loading"><div class="spinner"></div>טוען כתבות מכל העולם...</div>
+                </div>
+            </div>
+
+            <!-- IRAN STATE Section -->
+            <div class="feed-section" id="section-iran-state">
+                <div class="section-header">
+                    <h2>🇮🇷 תקשורת איראנית ממלכתית (מתורגם לעברית)</h2>
+                    <span class="count" id="iran-state-count">0</span>
+                </div>
+                <div class="news-grid" id="feed-iran-state">
+                    <div class="loading"><div class="spinner"></div>טוען מ-Press TV, IRNA, Fars News...</div>
+                </div>
+            </div>
+
+            <!-- IRAN INDEPENDENT Section -->
+            <div class="feed-section" id="section-iran-independent">
+                <div class="section-header">
+                    <h2>🗽 מקורות איראניים עצמאיים (מתורגם)</h2>
+                    <span class="count" id="iran-independent-count">0</span>
+                </div>
+                <div class="news-grid" id="feed-iran-independent">
+                    <div class="loading"><div class="spinner"></div>טוען מ-Iran International, IranWire...</div>
+                </div>
+            </div>
+
+            <!-- ARABIC / MIDDLE EAST Section -->
+            <div class="feed-section" id="section-arabic">
+                <div class="section-header">
+                    <h2>🌍 מקורות ערביים ומזרח תיכוניים</h2>
+                    <span class="count" id="arabic-count">0</span>
+                </div>
+                <div class="news-grid" id="feed-arabic">
+                    <div class="loading"><div class="spinner"></div>טוען מ-Al Jazeera, Al Monitor, Middle East Eye...</div>
+                </div>
+            </div>
+
+            <!-- WESTERN Section -->
+            <div class="feed-section" id="section-western">
+                <div class="section-header">
+                    <h2>🇺🇸🇬🇧 מקורות מערביים</h2>
+                    <span class="count" id="western-count">0</span>
+                </div>
+                <div class="news-grid" id="feed-western">
+                    <div class="loading"><div class="spinner"></div>טוען מ-BBC, CNN, Reuters, NPR...</div>
+                </div>
+            </div>
+
+            <!-- ISRAELI Section -->
+            <div class="feed-section" id="section-israeli">
+                <div class="section-header">
+                    <h2>🇮🇱 מקורות ישראליים</h2>
+                    <span class="count" id="israeli-count">0</span>
+                </div>
+                <div class="news-grid" id="feed-israeli">
+                    <div class="loading"><div class="spinner"></div>טוען מ-Ynet, הארץ, ג'רוזלם פוסט...</div>
+                </div>
+            </div>
+
+            <!-- RUSSIAN / CHINESE Section -->
+            <div class="feed-section" id="section-russian">
+                <div class="section-header">
+                    <h2>🇷🇺🇨🇳 מקורות רוסיים וסיניים</h2>
+                    <span class="count" id="russian-count">0</span>
+                </div>
+                <div class="news-grid" id="feed-russian">
+                    <div class="loading"><div class="spinner"></div>טוען מ-RT, TASS, Xinhua...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEFT SIDEBAR -->
+        <div class="sidebar">
+            <!-- Direct Links Grid -->
+            <div class="sidebar-card">
+                <h3>⚡ גישה מהירה - שידור חי</h3>
+                <div class="direct-links-grid">
+                    <a class="direct-link" href="https://www.aljazeera.com/news/liveblog/2026/3/10/iran-war-live-trump-says-conflict-will-be-over-soon-40-killed-in-tehran" target="_blank">
+                        <span class="link-flag">📡</span>Al Jazeera LIVE
+                    </a>
+                    <a class="direct-link" href="https://www.presstv.ir/LIVE" target="_blank">
+                        <span class="link-flag">🇮🇷</span>Press TV LIVE
+                    </a>
+                    <a class="direct-link" href="https://www.iranintl.com/en" target="_blank">
+                        <span class="link-flag">📺</span>Iran Intl LIVE
+                    </a>
+                    <a class="direct-link" href="https://www.livenowfox.com/news/live-updates-russia-helping-iran-war-death-toll-rises" target="_blank">
+                        <span class="link-flag">🇺🇸</span>FOX LIVE
+                    </a>
+                    <a class="direct-link" href="https://www.bbc.com/news/topics/c302m85q5ljt" target="_blank">
+                        <span class="link-flag">🇬🇧</span>BBC Iran
+                    </a>
+                    <a class="direct-link" href="https://en.wikipedia.org/wiki/2026_Iran_war" target="_blank">
+                        <span class="link-flag">📚</span>ויקיפדיה
+                    </a>
+                    <a class="direct-link" href="https://www.britannica.com/event/2026-Iran-Conflict" target="_blank">
+                        <span class="link-flag">📖</span>בריטניקה
+                    </a>
+                    <a class="direct-link" href="https://acleddata.com/iran-crisis-live" target="_blank">
+                        <span class="link-flag">📊</span>ACLED DATA
+                    </a>
+                </div>
+            </div>
+
+            <!-- International Sources -->
+            <div class="sidebar-card">
+                <h3>🌐 מקורות מערביים מובילים</h3>
+                <ul class="source-list">
+                    <li><a href="https://www.bbc.com/news/topics/c302m85q5ljt" target="_blank"><span class="badge badge-intl">בינלאומי</span> BBC News - Iran</a></li>
+                    <li><a href="https://www.cnn.com/middleeast" target="_blank"><span class="badge badge-intl">בינלאומי</span> CNN Middle East</a></li>
+                    <li><a href="https://www.reuters.com/world/middle-east/" target="_blank"><span class="badge badge-intl">בינלאומי</span> Reuters</a></li>
+                    <li><a href="https://www.npr.org/sections/world/" target="_blank"><span class="badge badge-intl">בינלאומי</span> NPR</a></li>
+                    <li><a href="https://www.nytimes.com/topic/destination/iran" target="_blank"><span class="badge badge-intl">בינלאומי</span> NY Times</a></li>
+                    <li><a href="https://www.washingtonpost.com/world/" target="_blank"><span class="badge badge-intl">בינלאומי</span> Washington Post</a></li>
+                    <li><a href="https://www.theguardian.com/world/iran" target="_blank"><span class="badge badge-intl">בינלאומי</span> The Guardian</a></li>
+                    <li><a href="https://www.pbs.org/newshour/tag/iran" target="_blank"><span class="badge badge-intl">בינלאומי</span> PBS NewsHour</a></li>
+                    <li><a href="https://apnews.com/hub/iran" target="_blank"><span class="badge badge-intl">בינלאומי</span> AP News</a></li>
+                    <li><a href="https://www.france24.com/en/tag/iran/" target="_blank"><span class="badge badge-intl">בינלאומי</span> France 24</a></li>
+                    <li><a href="https://www.dw.com/en/iran/t-17328037" target="_blank"><span class="badge badge-intl">בינלאומי</span> DW (גרמניה)</a></li>
+                </ul>
+            </div>
+
+            <!-- Arabic / Middle East Sources -->
+            <div class="sidebar-card">
+                <h3>🕌 מקורות ערביים / מזרח תיכוניים</h3>
+                <ul class="source-list">
+                    <li><a href="https://www.aljazeera.com/where/iran/" target="_blank"><span class="badge badge-intl">קטאר</span> Al Jazeera</a></li>
+                    <li><a href="https://www.middleeasteye.net/" target="_blank"><span class="badge badge-intl">בריטניה</span> Middle East Eye</a></li>
+                    <li><a href="https://www.al-monitor.com/" target="_blank"><span class="badge badge-intl">ארה"ב</span> Al-Monitor</a></li>
+                    <li><a href="https://english.alarabiya.net/" target="_blank"><span class="badge badge-intl">סעודיה</span> Al Arabiya</a></li>
+                    <li><a href="https://www.newsnow.com/us/World/Middle+East/Iran" target="_blank"><span class="badge badge-intl">אגרגטור</span> NewsNow Iran</a></li>
+                    <li><a href="https://www.crisisgroup.org/middle-east-north-africa/gulf-and-arabian-peninsula/iran" target="_blank"><span class="badge badge-intl">מחקר</span> Crisis Group</a></li>
+                </ul>
+            </div>
+
+            <!-- Israeli Sources -->
+            <div class="sidebar-card">
+                <h3>🇮🇱 מקורות ישראליים</h3>
+                <ul class="source-list">
+                    <li><a href="https://www.ynet.co.il/home/0,7340,L-8,00.html" target="_blank"><span class="badge badge-israeli">ישראלי</span> Ynet</a></li>
+                    <li><a href="https://www.haaretz.co.il/" target="_blank"><span class="badge badge-israeli">ישראלי</span> הארץ</a></li>
+                    <li><a href="https://www.jpost.com/" target="_blank"><span class="badge badge-israeli">ישראלי</span> Jerusalem Post</a></li>
+                    <li><a href="https://www.timesofisrael.com/" target="_blank"><span class="badge badge-israeli">ישראלי</span> Times of Israel</a></li>
+                    <li><a href="https://www.mako.co.il/news-military" target="_blank"><span class="badge badge-israeli">ישראלי</span> מאקו צבאי</a></li>
+                    <li><a href="https://www.kan.org.il/" target="_blank"><span class="badge badge-israeli">ישראלי</span> כאן חדשות</a></li>
+                    <li><a href="https://www.israelhayom.co.il/" target="_blank"><span class="badge badge-israeli">ישראלי</span> ישראל היום</a></li>
+                    <li><a href="https://israel-alma.org/" target="_blank"><span class="badge badge-israeli">מחקר</span> Alma Center</a></li>
+                </ul>
+            </div>
+
+            <!-- Russian/Chinese Sources -->
+            <div class="sidebar-card">
+                <h3>🇷🇺🇨🇳 מקורות רוסיים וסיניים</h3>
+                <ul class="source-list">
+                    <li><a href="https://www.rt.com/news/" target="_blank"><span class="badge badge-state">ממלכתי</span> RT (רוסיה)</a></li>
+                    <li><a href="https://tass.com/world" target="_blank"><span class="badge badge-state">ממלכתי</span> TASS</a></li>
+                    <li><a href="https://english.news.cn/" target="_blank"><span class="badge badge-state">ממלכתי</span> Xinhua (סין)</a></li>
+                    <li><a href="https://www.globaltimes.cn/" target="_blank"><span class="badge badge-state">ממלכתי</span> Global Times</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- REFRESH BUTTON -->
+    <button class="refresh-btn" onclick="refreshAll()" title="רענן הכל">↻</button>
+
+    <!-- FOOTER -->
+    <footer>
+        <p class="disclaimer">⚠️ הצהרה: אתר זה מאגד חדשות ממקורות מגוונים ברחבי העולם. המידע המוצג משקף את עמדות המקורות המקוריים ואינו מייצג בהכרח עמדה עצמאית. תקשורת ממלכתית (איראנית, רוסית, סינית) עשויה לשקף פרופגנדה. מומלץ לצלוב מידע ממספר מקורות.</p>
+        <p>מקורות: Press TV | IRNA | Fars News | Mehr News | Tasnim | Iran International | IranWire | Radio Farda | Al Jazeera | BBC | CNN | Reuters | NPR | NY Times | Guardian | France 24 | DW | Al Arabiya | Middle East Eye | Al-Monitor | Ynet | Haaretz | Jerusalem Post | Times of Israel | RT | TASS | Xinhua | ACLED | Crisis Group | Britannica</p>
+        <p style="margin-top:10px; font-size:11px">נבנה ב-10 במרץ 2026 | עדכון אוטומטי כל 10 דקות</p>
+    </footer>
+
+    <script>
+        // =============================================
+        // RSS FEED SOURCES CONFIGURATION
+        // =============================================
+        const RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
+        const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+
+        const FEEDS = {
+            'iran-state': [
+                { name: 'Press TV', url: 'https://www.presstv.ir/RSS', lang: 'en', country: '🇮🇷' },
+                { name: 'IRNA', url: 'https://en.irna.ir/rss', lang: 'en', country: '🇮🇷' },
+                { name: 'Mehr News', url: 'https://en.mehrnews.com/rss', lang: 'en', country: '🇮🇷' },
+                { name: 'Tehran Times', url: 'https://www.tehrantimes.com/rss', lang: 'en', country: '🇮🇷' },
+                { name: 'Fars News', url: 'https://en.farsnews.ir/rss', lang: 'en', country: '🇮🇷' },
+                { name: 'Iran Press', url: 'https://iranpress.com/rss', lang: 'en', country: '🇮🇷' },
+            ],
+            'iran-independent': [
+                { name: 'Iran International', url: 'https://www.iranintl.com/en/rss', lang: 'en', country: '🇮🇷' },
+                { name: 'IranWire', url: 'https://iranwire.com/en/feed/', lang: 'en', country: '🇮🇷' },
+                { name: 'Radio Farda', url: 'https://en.radiofarda.com/api/zrqiteuuir', lang: 'en', country: '🇮🇷' },
+                { name: 'Kayhan Life', url: 'https://kayhanlife.com/feed/', lang: 'en', country: '🇮🇷' },
+            ],
+            'arabic': [
+                { name: 'Al Jazeera', url: 'https://www.aljazeera.com/xml/rss/all.xml', lang: 'en', country: '🇶🇦' },
+                { name: 'Middle East Eye', url: 'https://www.middleeasteye.net/rss', lang: 'en', country: '🇬🇧' },
+                { name: 'Al Arabiya', url: 'https://english.alarabiya.net/tools/rss', lang: 'en', country: '🇸🇦' },
+                { name: 'Al-Monitor', url: 'https://www.al-monitor.com/rss', lang: 'en', country: '🇺🇸' },
+            ],
+            'western': [
+                { name: 'BBC News', url: 'https://feeds.bbci.co.uk/news/world/middle_east/rss.xml', lang: 'en', country: '🇬🇧' },
+                { name: 'CNN', url: 'http://rss.cnn.com/rss/edition_meast.rss', lang: 'en', country: '🇺🇸' },
+                { name: 'Reuters', url: 'https://www.reutersagency.com/feed/', lang: 'en', country: '🇬🇧' },
+                { name: 'NPR', url: 'https://feeds.npr.org/1004/rss.xml', lang: 'en', country: '🇺🇸' },
+                { name: 'France 24', url: 'https://www.france24.com/en/middle-east/rss', lang: 'en', country: '🇫🇷' },
+                { name: 'DW', url: 'https://rss.dw.com/rdf/rss-en-world', lang: 'en', country: '🇩🇪' },
+                { name: 'PBS', url: 'https://www.pbs.org/newshour/feeds/rss/world', lang: 'en', country: '🇺🇸' },
+                { name: 'AP News', url: 'https://rsshub.app/apnews/topics/apf-intlnews', lang: 'en', country: '🇺🇸' },
+                { name: 'The Guardian', url: 'https://www.theguardian.com/world/iran/rss', lang: 'en', country: '🇬🇧' },
+            ],
+            'israeli': [
+                { name: 'Jerusalem Post', url: 'https://www.jpost.com/rss/rssfeedsmiddleeast', lang: 'en', country: '🇮🇱' },
+                { name: 'Times of Israel', url: 'https://www.timesofisrael.com/feed/', lang: 'en', country: '🇮🇱' },
+                { name: 'Haaretz', url: 'https://www.haaretz.com/srv/haaretz-latest-headlines', lang: 'en', country: '🇮🇱' },
+                { name: 'Ynet', url: 'https://www.ynetnews.com/Integration/StoryRss2.html', lang: 'en', country: '🇮🇱' },
+                { name: 'i24 News', url: 'https://www.i24news.tv/en/rss', lang: 'en', country: '🇮🇱' },
+            ],
+            'russian': [
+                { name: 'RT', url: 'https://www.rt.com/rss/news/', lang: 'en', country: '🇷🇺' },
+                { name: 'TASS', url: 'https://tass.com/rss/v2.xml', lang: 'en', country: '🇷🇺' },
+                { name: 'Xinhua', url: 'https://rsshub.app/xinhua/english/world', lang: 'en', country: '🇨🇳' },
+                { name: 'Global Times', url: 'https://www.globaltimes.cn/rss/outbrain.xml', lang: 'en', country: '🇨🇳' },
+            ]
+        };
+
+        // Iran-related keywords for filtering
+        const IRAN_KEYWORDS = [
+            'iran', 'iranian', 'tehran', 'isfahan', 'tabriz', 'shiraz',
+            'khamenei', 'mojtaba', 'irgc', 'revolutionary guard', 'quds force',
+            'hezbollah', 'hezballah', 'hizbullah',
+            'nuclear', 'enrichment', 'natanz', 'fordow',
+            'strait of hormuz', 'persian gulf',
+            'proxy', 'militia', 'houthi',
+            'israel', 'idf', 'netanyahu', 'gallant',
+            'trump', 'pentagon', 'centcom',
+            'missile', 'drone', 'ballistic',
+            'sanction', 'oil price', 'crude oil',
+            'war', 'strike', 'attack', 'bomb', 'raid',
+            'casualt', 'killed', 'dead', 'wounded',
+            'ceasefire', 'surrender', 'negotiat',
+            'beirut', 'lebanon', 'syria', 'iraq',
+            'middle east', 'mideast',
+            'epic fury', 'operation'
+        ];
+
+        let allArticles = [];
+        let autoTranslate = true;
+
+        // =============================================
+        // FETCH RSS FEEDS
+        // =============================================
+        async function fetchFeed(feed) {
+            const endpoints = [
+                `${RSS_API}${encodeURIComponent(feed.url)}&count=20`,
+                `${CORS_PROXY}${encodeURIComponent(feed.url)}`
+            ];
+
+            for (const endpoint of endpoints) {
+                try {
+                    const response = await fetch(endpoint, { signal: AbortSignal.timeout(10000) });
+                    if (!response.ok) continue;
+
+                    const contentType = response.headers.get('content-type') || '';
+                    let articles = [];
+
+                    if (contentType.includes('json') || endpoint.includes('rss2json')) {
+                        const data = await response.json();
+                        if (data.items) {
+                            articles = data.items.map(item => ({
+                                title: item.title || '',
+                                description: stripHtml(item.description || item.content || ''),
+                                link: item.link || item.guid || '',
+                                pubDate: item.pubDate || item.published || '',
+                                source: feed.name,
+                                country: feed.country,
+                                lang: feed.lang,
+                                category: Object.keys(FEEDS).find(k =>
+                                    FEEDS[k].some(f => f.name === feed.name)
+                                ) || 'western'
+                            }));
+                        }
+                    } else {
+                        const text = await response.text();
+                        articles = parseXML(text, feed);
+                    }
+
+                    // Filter for Iran/war relevance
+                    const filtered = articles.filter(a => {
+                        const text = (a.title + ' ' + a.description).toLowerCase();
+                        return IRAN_KEYWORDS.some(kw => text.includes(kw));
+                    });
+
+                    return filtered.length > 0 ? filtered : articles.slice(0, 5);
+                } catch (e) {
+                    continue;
+                }
+            }
+            return [];
+        }
+
+        function parseXML(xmlText, feed) {
+            try {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(xmlText, 'text/xml');
+                const items = doc.querySelectorAll('item, entry');
+                const articles = [];
+
+                items.forEach(item => {
+                    const title = item.querySelector('title')?.textContent || '';
+                    const desc = item.querySelector('description, summary, content')?.textContent || '';
+                    const link = item.querySelector('link')?.textContent ||
+                                 item.querySelector('link')?.getAttribute('href') || '';
+                    const date = item.querySelector('pubDate, published, updated, date')?.textContent || '';
+
+                    articles.push({
+                        title: stripHtml(title),
+                        description: stripHtml(desc).substring(0, 300),
+                        link: link,
+                        pubDate: date,
+                        source: feed.name,
+                        country: feed.country,
+                        lang: feed.lang,
+                        category: Object.keys(FEEDS).find(k =>
+                            FEEDS[k].some(f => f.name === feed.name)
+                        ) || 'western'
+                    });
+                });
+
+                return articles;
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function stripHtml(html) {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || '';
+        }
+
+        // =============================================
+        // GOOGLE TRANSLATE (FREE URL-BASED)
+        // =============================================
+        function getTranslateUrl(text, from = 'auto', to = 'he') {
+            return `https://translate.google.com/?sl=${from}&tl=${to}&text=${encodeURIComponent(text)}&op=translate`;
+        }
+
+        // =============================================
+        // RENDER ARTICLES
+        // =============================================
+        function renderArticles(articles, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (articles.length === 0) {
+                container.innerHTML = `
+                    <div class="feed-error">
+                        לא נמצאו כתבות. לחץ על כפתור הרענון או גש ישירות למקורות בסרגל הצד.
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = articles.map((article, i) => {
+                const timeAgo = getTimeAgo(article.pubDate);
+                const isFeatured = i === 0 ? 'featured' : '';
+                const translateLink = getTranslateUrl(article.title + '. ' + article.description);
+
+                return `
+                    <div class="news-card ${isFeatured}" onclick="window.open('${escapeHtml(article.link)}', '_blank')">
+                        <div class="source-tag">
+                            ${article.country} ${escapeHtml(article.source)}
+                            <span class="time">${timeAgo}</span>
+                        </div>
+                        <h4>${escapeHtml(article.title)}</h4>
+                        <p>${escapeHtml(article.description)}</p>
+                        <div class="card-footer">
+                            <span class="read-more">קרא עוד ←</span>
+                            <button class="translate-btn" onclick="event.stopPropagation(); window.open('${translateLink}', '_blank')">
+                                תרגם לעברית 🔄
+                            </button>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getTimeAgo(dateStr) {
+            if (!dateStr) return 'לא ידוע';
+            try {
+                const date = new Date(dateStr);
+                const now = new Date();
+                const diff = Math.floor((now - date) / 1000);
+
+                if (diff < 60) return 'לפני רגע';
+                if (diff < 3600) return `לפני ${Math.floor(diff / 60)} דקות`;
+                if (diff < 86400) return `לפני ${Math.floor(diff / 3600)} שעות`;
+                if (diff < 604800) return `לפני ${Math.floor(diff / 86400)} ימים`;
+                return date.toLocaleDateString('he-IL');
+            } catch {
+                return dateStr;
+            }
+        }
+
+        // =============================================
+        // MAIN LOAD FUNCTION
+        // =============================================
+        async function loadAllFeeds() {
+            allArticles = [];
+            let totalLoaded = 0;
+
+            const categoryPromises = Object.entries(FEEDS).map(async ([category, feeds]) => {
+                const feedPromises = feeds.map(feed => fetchFeed(feed));
+                const results = await Promise.allSettled(feedPromises);
+
+                let categoryArticles = [];
+                results.forEach(result => {
+                    if (result.status === 'fulfilled' && result.value.length > 0) {
+                        categoryArticles = categoryArticles.concat(result.value);
+                    }
+                });
+
+                // Sort by date
+                categoryArticles.sort((a, b) => {
+                    try {
+                        return new Date(b.pubDate) - new Date(a.pubDate);
+                    } catch {
+                        return 0;
+                    }
+                });
+
+                // Render category
+                renderArticles(categoryArticles, `feed-${category}`);
+
+                // Update count
+                const countEl = document.getElementById(`${category}-count`);
+                if (countEl) countEl.textContent = categoryArticles.length;
+
+                totalLoaded += categoryArticles.length;
+                allArticles = allArticles.concat(categoryArticles);
+            });
+
+            await Promise.allSettled(categoryPromises);
+
+            // Sort all articles by date and render
+            allArticles.sort((a, b) => {
+                try {
+                    return new Date(b.pubDate) - new Date(a.pubDate);
+                } catch {
+                    return 0;
+                }
+            });
+
+            renderArticles(allArticles, 'feed-all');
+            document.getElementById('all-count').textContent = allArticles.length;
+            document.getElementById('source-count').textContent = totalLoaded;
+            document.getElementById('update-time').textContent = new Date().toLocaleTimeString('he-IL');
+        }
+
+        // =============================================
+        // TAB NAVIGATION
+        // =============================================
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.feed-section').forEach(s => s.classList.remove('active'));
+
+                tab.classList.add('active');
+                const section = document.getElementById(`section-${tab.dataset.tab}`);
+                if (section) section.classList.add('active');
+            });
+        });
+
+        // =============================================
+        // SEARCH
+        // =============================================
+        function filterNews() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            if (!query) {
+                renderArticles(allArticles, 'feed-all');
+                return;
+            }
+
+            const filtered = allArticles.filter(a => {
+                const text = (a.title + ' ' + a.description + ' ' + a.source).toLowerCase();
+                return text.includes(query);
+            });
+
+            // Switch to "all" tab
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.feed-section').forEach(s => s.classList.remove('active'));
+            document.querySelector('[data-tab="all"]').classList.add('active');
+            document.getElementById('section-all').classList.add('active');
+
+            renderArticles(filtered, 'feed-all');
+            document.getElementById('all-count').textContent = `${filtered.length} (סונן)`;
+        }
+
+        document.getElementById('search-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') filterNews();
+        });
+
+        // =============================================
+        // TRANSLATE TOGGLE
+        // =============================================
+        function toggleTranslate() {
+            const toggle = document.getElementById('auto-translate');
+            autoTranslate = !autoTranslate;
+            toggle.classList.toggle('active');
+        }
+
+        // =============================================
+        // REFRESH
+        // =============================================
+        async function refreshAll() {
+            const btn = document.querySelector('.refresh-btn');
+            btn.classList.add('spinning');
+
+            // Reset feeds with loading
+            Object.keys(FEEDS).forEach(cat => {
+                const el = document.getElementById(`feed-${cat}`);
+                if (el) el.innerHTML = '<div class="loading"><div class="spinner"></div>מרענן...</div>';
+            });
+            document.getElementById('feed-all').innerHTML = '<div class="loading"><div class="spinner"></div>טוען כתבות מכל העולם...</div>';
+
+            await loadAllFeeds();
+            btn.classList.remove('spinning');
+        }
+
+        // =============================================
+        // INIT
+        // =============================================
+        loadAllFeeds();
+
+        // Auto-refresh every 10 minutes
+        setInterval(loadAllFeeds, 10 * 60 * 1000);
+    </script>
+</body>
+</html>
