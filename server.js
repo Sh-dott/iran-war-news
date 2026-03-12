@@ -1100,11 +1100,13 @@ app.get('/api/feeds', async (req, res) => {
         const feeds = await fetchAllFeeds();
         // Map to Hebrew-only: replace title/description with Hebrew versions
         // Exclude articles that haven't been translated yet (unless already Hebrew)
+        // Re-apply relevance filter to catch stale cached articles
         const hasHebrew = (text) => text && /[\u0590-\u05FF]/.test(text);
         const hebrewFeeds = {};
         for (const [category, articles] of Object.entries(feeds)) {
             hebrewFeeds[category] = articles
                 .filter(a => a.lang === 'he' || hasHebrew(a.title_he))
+                .filter(a => isIranWarRelevant((a.title_he || a.title || '') + ' ' + (a.description_he || a.description || ''), a.lang))
                 .map(a => ({
                     ...a,
                     title: hasHebrew(a.title_he) ? a.title_he : a.title,
