@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>מרכז החדשות | מלחמת איראן-ישראל-ארה"ב 2026</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -26,6 +27,10 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html {
+            font-size: calc(1em + 2px);
+        }
+
         body {
             font-family: 'Rubik', sans-serif;
             background: var(--bg-primary);
@@ -47,25 +52,27 @@
             z-index: 1000;
             font-weight: 600;
             font-size: 14px;
+            direction: rtl;
         }
 
         .ticker-content {
             display: inline-block;
             white-space: nowrap;
-            animation: ticker 45s linear infinite;
+            animation: ticker 90s linear infinite;
         }
 
         @keyframes ticker {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100vw); }
+            0% { transform: translateX(-50vw); }
+            100% { transform: translateX(100%); }
         }
 
         .ticker-content span {
             padding: 0 40px;
         }
 
-        .ticker-content span::before {
-            content: "🔴 ";
+        .ticker-content span:not(:empty)::before {
+            content: "● ";
+            color: #fff;
         }
 
         /* HEADER */
@@ -74,10 +81,6 @@
             background: var(--bg-secondary);
             border-bottom: 3px solid var(--accent-red);
             padding: 20px 0;
-            position: sticky;
-            top: 36px;
-            z-index: 900;
-            backdrop-filter: blur(10px);
         }
 
         .header-inner {
@@ -161,6 +164,49 @@
             font-weight: 600;
         }
 
+        /* TELEGRAM BADGE */
+        .telegram-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #0088cc, #229ED9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+            animation: telegramPulse 3s ease-in-out infinite;
+        }
+
+        .telegram-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.5);
+            background: linear-gradient(135deg, #229ED9, #0088cc);
+        }
+
+        .telegram-badge svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        @keyframes telegramPulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3); }
+            50% { box-shadow: 0 4px 25px rgba(0, 136, 204, 0.6); }
+        }
+
+        /* Floating telegram badge (bottom-left for RTL) */
+        .telegram-float {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 999;
+        }
+
         /* NAV TABS */
         .nav-tabs {
             background: var(--bg-secondary);
@@ -171,8 +217,8 @@
             gap: 5px;
             flex-wrap: wrap;
             position: sticky;
-            top: 130px;
-            z-index: 800;
+            top: 36px;
+            z-index: 900;
         }
 
         .nav-tab {
@@ -192,10 +238,27 @@
             background: rgba(230, 57, 70, 0.1);
         }
 
+        .tab-flag {
+            width: 20px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+            vertical-align: middle;
+            margin-left: 6px;
+            box-shadow: 0 0 3px rgba(0,0,0,0.4);
+        }
         .nav-tab .flag {
             margin-left: 6px;
             font-style: normal;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 3px;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            vertical-align: middle;
         }
+        .flag.tab-tg { background: #2d2d1b; color: #f39c12; border: 1px solid #f39c1244; }
 
         /* MAIN LAYOUT */
         .main-container {
@@ -493,6 +556,16 @@
             font-weight: 500;
         }
 
+        .cas-flag {
+            width: 18px;
+            height: 12px;
+            object-fit: cover;
+            border-radius: 2px;
+            vertical-align: middle;
+            margin-left: 4px;
+            box-shadow: 0 0 2px rgba(0,0,0,0.4);
+        }
+
         .casualty-row .count {
             font-size: 16px;
             font-weight: 800;
@@ -707,50 +780,108 @@
         }
 
         .direct-links-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 8px;
         }
 
         .direct-link {
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 10px;
+            padding: 8px;
             text-decoration: none;
             color: var(--text-primary);
             font-size: 12px;
-            font-weight: 500;
-            text-align: center;
+            font-weight: 600;
             transition: all 0.2s;
+            position: relative;
+            cursor: pointer;
         }
 
         .direct-link:hover {
             background: var(--bg-card-hover);
             border-color: var(--accent-gold);
+            transform: translateX(-2px);
+        }
+
+        .direct-link .link-thumb {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            object-fit: contain;
+            flex-shrink: 0;
+            background: #fff;
+            padding: 4px;
+        }
+
+        .direct-link .link-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .direct-link .link-name {
+            display: block;
+            font-weight: 700;
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .direct-link .link-desc {
+            display: block;
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .direct-link .live-badge {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            background: var(--accent-red);
+            color: white;
+            font-size: 8px;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 2px;
+            letter-spacing: 1px;
+            animation: livePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
 
         .direct-link .link-flag {
-            font-size: 18px;
-            display: block;
-            margin-bottom: 4px;
+            font-size: 9px;
+            font-weight: 800;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+            background: rgba(255,255,255,0.06);
+            padding: 2px 5px;
+            border-radius: 3px;
+            flex-shrink: 0;
         }
     </style>
 </head>
 <body>
     <!-- BREAKING NEWS TICKER -->
     <div class="breaking-ticker">
-        <div class="ticker-content">
-            <span>יום 11 למלחמה: איראן ממנה מנהיג עליון חדש - מוג'תבא חמינאי</span>
-            <span>טראמפ דורש "כניעה ללא תנאי" מאיראן</span>
-            <span>מעל 1,332 הרוגים מתחילת המתקפה ב-28 בפברואר</span>
-            <span>מחירי הנפט מתקרבים ל-120$ לחבית</span>
-            <span>8 חיילים אמריקאים נהרגו עד כה</span>
-            <span>394 הרוגים בלבנון כולל 83 ילדים</span>
-            <span>חיזבאללה יורה רקטות לצפון ישראל בתגובה</span>
-            <span>רוסיה מסייעת לאיראן - מספר ההרוגים עולה</span>
+        <div class="ticker-content" id="ticker-content">
+            <span id="ticker-war-day"></span>
+            <span>עדכון מבזקים בטעינה...</span>
         </div>
+        <script>
+            // Instant war day calculation (no API wait)
+            const _d = Math.floor((Date.now() - new Date('2026-02-28T00:00:00Z').getTime()) / 86400000) + 1;
+            document.getElementById('ticker-war-day').textContent = 'יום ' + _d + ' למלחמה באיראן';
+        </script>
     </div>
 
     <!-- HEADER -->
@@ -760,38 +891,49 @@
                 <div class="live-dot"></div>
                 <div>
                     <h1>מרכז החדשות | מלחמת איראן 2026</h1>
-                    <div class="subtitle">אגרגטור חדשות בזמן אמת מ-50+ מקורות בינלאומיים | פרסית → עברית</div>
+                    <div class="subtitle">חדשות בזמן אמת מ-50+ מקורות בינלאומיים | פרסית | עברית</div>
                 </div>
             </div>
             <div class="header-stats">
                 <div class="stat-box">
-                    <div class="number">11</div>
+                    <div class="number" id="war-days">-</div>
                     <div class="label">ימי מלחמה</div>
                 </div>
                 <div class="stat-box">
-                    <div class="number" id="total-killed">1,332+</div>
+                    <div class="number" id="total-killed">--</div>
                     <div class="label">הרוגים</div>
                 </div>
                 <div class="stat-box">
                     <div class="number" id="source-count">0</div>
-                    <div class="label">כתבות נטענו</div>
+                    <div class="label">כתבות</div>
                 </div>
             </div>
             <div class="last-update">
                 עדכון אחרון: <span id="update-time">טוען...</span>
             </div>
+            <a id="telegram-header-badge" class="telegram-badge" href="https://t.me/iran_war_news_he" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                הצטרפו לערוץ הטלגרם
+            </a>
         </div>
     </header>
+
 
     <!-- NAV TABS -->
     <div class="nav-tabs">
         <div class="nav-tab active" data-tab="all">הכל</div>
-        <div class="nav-tab" data-tab="iran-state"><em class="flag">🇮🇷</em> תקשורת איראנית ממלכתית</div>
-        <div class="nav-tab" data-tab="iran-independent"><em class="flag">🇮🇷</em> איראן עצמאית</div>
-        <div class="nav-tab" data-tab="arabic"><em class="flag">🌍</em> ערבית / מזה"ת</div>
-        <div class="nav-tab" data-tab="western"><em class="flag">🇺🇸🇬🇧</em> מערבי</div>
-        <div class="nav-tab" data-tab="israeli"><em class="flag">🇮🇱</em> ישראלי</div>
-        <div class="nav-tab" data-tab="russian"><em class="flag">🇷🇺🇨🇳</em> רוסיה / סין</div>
+        <div class="nav-tab" data-tab="iran-state"><img class="tab-flag" src="https://flagcdn.com/w40/ir.png" alt="IR"> תקשורת איראנית ממלכתית</div>
+        <div class="nav-tab" data-tab="iran-independent"><img class="tab-flag" src="https://flagcdn.com/w40/ir.png" alt="IR"> איראן עצמאית</div>
+        <div class="nav-tab" data-tab="arabic"><img class="tab-flag" src="https://flagcdn.com/w40/sa.png" alt="ME"> ערבית / מזה"ת</div>
+        <div class="nav-tab" data-tab="western"><img class="tab-flag" src="https://flagcdn.com/w40/us.png" alt="US"><img class="tab-flag" src="https://flagcdn.com/w40/gb.png" alt="GB"> מערבי</div>
+        <div class="nav-tab" data-tab="israeli"><img class="tab-flag" src="https://flagcdn.com/w40/il.png" alt="IL"> ישראלי</div>
+        <div class="nav-tab" data-tab="telegram"><img class="tab-flag" src="https://www.google.com/s2/favicons?domain=news.google.com&sz=40" alt="GN"> חדשות גוגל</div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-bar" style="margin:0 auto;max-width:1400px;padding:10px 20px">
+        <input type="text" id="search-input" placeholder="חיפוש בכתבות...">
+        <button onclick="filterNews()">חפש</button>
     </div>
 
     <!-- MAIN LAYOUT -->
@@ -800,75 +942,67 @@
         <div class="sidebar">
             <!-- Casualty Tracker -->
             <div class="casualty-tracker">
-                <h3>📊 מעקב נפגעים - עדכון שוטף</h3>
-                <div class="casualty-row">
-                    <span class="country">🇮🇷 איראן</span>
-                    <span class="count">1,230+</span>
+                <h3>◈ מעקב נפגעים - עדכון שוטף</h3>
+                <div class="casualty-row" style="border-bottom:2px solid var(--accent-red);padding-bottom:8px;margin-bottom:4px">
+                    <span class="country" style="font-weight:700">סה"כ הרוגים</span>
+                    <span class="count" id="cas-total-dead" style="font-size:18px">--</span>
                 </div>
                 <div class="casualty-row">
-                    <span class="country">🇱🇧 לבנון</span>
-                    <span class="count">394</span>
+                    <span class="country"><img class="cas-flag" src="https://flagcdn.com/w20/ir.png" alt="IR"> הרוגים באיראן</span>
+                    <span class="count" id="cas-iran-dead">--</span>
                 </div>
                 <div class="casualty-row">
-                    <span class="country">🇮🇱 ישראל</span>
-                    <span class="count">12</span>
+                    <span class="country"><img class="cas-flag" src="https://flagcdn.com/w20/ir.png" alt="IR"> פצועים באיראן</span>
+                    <span class="count" id="cas-iran-injured" style="color:#f39c12">--</span>
                 </div>
                 <div class="casualty-row">
-                    <span class="country">🇺🇸 ארה"ב (חיילים)</span>
-                    <span class="count">8</span>
+                    <span class="country"><img class="cas-flag" src="https://flagcdn.com/w20/lb.png" alt="LB"> הרוגים בלבנון</span>
+                    <span class="count" id="cas-lebanon-dead">--</span>
                 </div>
                 <div class="casualty-row">
-                    <span class="country">🇮🇱 פצועים בישראל</span>
-                    <span class="count">2,142</span>
+                    <span class="country"><img class="cas-flag" src="https://flagcdn.com/w20/lb.png" alt="LB"> פצועים בלבנון</span>
+                    <span class="count" id="cas-lebanon-injured" style="color:#f39c12">--</span>
+                </div>
+                <div class="casualty-row">
+                    <span class="country"><img class="cas-flag" src="https://flagcdn.com/w20/il.png" alt="IL"> הרוגים בישראל</span>
+                    <span class="count" id="cas-israel-dead">--</span>
+                </div>
+                <div class="casualty-row">
+                    <span class="country"><img class="cas-flag" src="https://flagcdn.com/w20/il.png" alt="IL"> פצועים בישראל</span>
+                    <span class="count" id="cas-israel-injured" style="color:#f39c12">--</span>
+                </div>
+                <div class="casualty-row">
+                    <span class="country"><img class="cas-flag" src="https://flagcdn.com/w20/us.png" alt="US"> הרוגים ארה"ב (חיילים)</span>
+                    <span class="count" id="cas-us-dead">--</span>
+                </div>
+                <div class="casualty-row">
+                    <span class="country"><img class="cas-flag" src="https://flagcdn.com/w20/us.png" alt="US"> פצועים ארה"ב (חיילים)</span>
+                    <span class="count" id="cas-us-injured" style="color:#f39c12">--</span>
+                </div>
+                <div style="text-align:center;margin-top:8px;font-size:9px;color:var(--text-secondary)">
+                    <span id="cas-source-count"></span> מקורות מוצלבים | עדכון כל 30 שניות
                 </div>
             </div>
 
-            <!-- Timeline -->
+            <!-- Oil Price Live -->
+            <div class="sidebar-card" style="text-align:center">
+                <h3>◈ מחיר נפט גולמי - LIVE</h3>
+                <div style="font-size:36px;font-weight:800;color:var(--accent-gold);line-height:1.2" id="oil-price-display">--</div>
+                <div style="font-size:16px;font-weight:700;margin-top:6px" id="oil-delta-display"></div>
+                <div style="font-size:12px;color:var(--text-secondary);margin-top:4px"><span id="oil-update-time">--</span></div>
+            </div>
+
+            <!-- Timeline (auto-updating) -->
             <div class="sidebar-card">
-                <h3>📅 ציר זמן המלחמה</h3>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="time">28 פבר' 2026</div>
-                        <div class="event">ישראל וארה"ב תוקפות את איראן. חמינאי נהרג בתקיפה.</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="time">1 מרץ</div>
-                        <div class="event">איראן תוקפת בסיס אמריקאי בסעודיה. טיל בליסטי פוגע.</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="time">2 מרץ</div>
-                        <div class="event">חיזבאללה יורה רקטות לצפון ישראל בתגובה.</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="time">6 מרץ</div>
-                        <div class="event">ישראל תוקפת בירות וטהרן. טראמפ דורש כניעה.</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="time">9 מרץ</div>
-                        <div class="event">מוג'תבא חמינאי מונה כמנהיג העליון החדש של איראן.</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="time">10 מרץ</div>
-                        <div class="event">איראן נשבעת להשתמש בטילים חזקים, דוחה שיחות עם טראמפ.</div>
-                    </div>
+                <h3>◈ ציר זמן המלחמה</h3>
+                <div class="timeline" id="timeline-container">
+                    <div style="color:var(--text-secondary);font-size:13px">טוען ציר זמן...</div>
                 </div>
-            </div>
-
-            <!-- Search -->
-            <div class="search-bar">
-                <input type="text" id="search-input" placeholder="חיפוש בכתבות...">
-                <button onclick="filterNews()">חפש</button>
-            </div>
-
-            <!-- Auto-translate toggle -->
-            <div class="translate-toggle">
-                <label>תרגום אוטומטי לעברית</label>
-                <div class="toggle-switch active" id="auto-translate" onclick="toggleTranslate()"></div>
             </div>
 
             <!-- Iranian State Sources -->
             <div class="sidebar-card">
-                <h3>🇮🇷 מקורות איראניים ממלכתיים</h3>
+                <h3>◈ מקורות איראניים ממלכתיים</h3>
                 <ul class="source-list">
                     <li><a href="https://www.presstv.ir/" target="_blank"><span class="badge badge-state">ממלכתי</span> Press TV (אנגלית)</a></li>
                     <li><a href="https://en.irna.ir/" target="_blank"><span class="badge badge-state">ממלכתי</span> IRNA - סוכנות הידיעות</a></li>
@@ -883,7 +1017,7 @@
 
             <!-- Iranian Independent Sources -->
             <div class="sidebar-card">
-                <h3>🗽 מקורות איראניים עצמאיים</h3>
+                <h3>◈ מקורות איראניים עצמאיים</h3>
                 <ul class="source-list">
                     <li><a href="https://www.iranintl.com/en" target="_blank"><span class="badge badge-independent">עצמאי</span> Iran International (לונדון)</a></li>
                     <li><a href="https://iranwire.com/en/" target="_blank"><span class="badge badge-independent">עצמאי</span> IranWire</a></li>
@@ -900,7 +1034,7 @@
             <!-- ALL Section -->
             <div class="feed-section active" id="section-all">
                 <div class="section-header">
-                    <h2>📰 כל החדשות - זרם חי</h2>
+                    <h2>■ כל החדשות — חי</h2>
                     <span class="count" id="all-count">טוען...</span>
                 </div>
                 <div class="news-grid" id="feed-all">
@@ -911,7 +1045,7 @@
             <!-- IRAN STATE Section -->
             <div class="feed-section" id="section-iran-state">
                 <div class="section-header">
-                    <h2>🇮🇷 תקשורת איראנית ממלכתית (מתורגם לעברית)</h2>
+                    <h2>■ תקשורת איראנית ממלכתית (מתורגם לעברית)</h2>
                     <span class="count" id="iran-state-count">0</span>
                 </div>
                 <div class="news-grid" id="feed-iran-state">
@@ -922,7 +1056,7 @@
             <!-- IRAN INDEPENDENT Section -->
             <div class="feed-section" id="section-iran-independent">
                 <div class="section-header">
-                    <h2>🗽 מקורות איראניים עצמאיים (מתורגם)</h2>
+                    <h2>■ מקורות איראניים עצמאיים (מתורגם)</h2>
                     <span class="count" id="iran-independent-count">0</span>
                 </div>
                 <div class="news-grid" id="feed-iran-independent">
@@ -933,7 +1067,7 @@
             <!-- ARABIC / MIDDLE EAST Section -->
             <div class="feed-section" id="section-arabic">
                 <div class="section-header">
-                    <h2>🌍 מקורות ערביים ומזרח תיכוניים</h2>
+                    <h2>■ מקורות ערביים ומזרח תיכוניים</h2>
                     <span class="count" id="arabic-count">0</span>
                 </div>
                 <div class="news-grid" id="feed-arabic">
@@ -944,7 +1078,7 @@
             <!-- WESTERN Section -->
             <div class="feed-section" id="section-western">
                 <div class="section-header">
-                    <h2>🇺🇸🇬🇧 מקורות מערביים</h2>
+                    <h2>■ מקורות מערביים</h2>
                     <span class="count" id="western-count">0</span>
                 </div>
                 <div class="news-grid" id="feed-western">
@@ -955,7 +1089,7 @@
             <!-- ISRAELI Section -->
             <div class="feed-section" id="section-israeli">
                 <div class="section-header">
-                    <h2>🇮🇱 מקורות ישראליים</h2>
+                    <h2>■ מקורות ישראליים</h2>
                     <span class="count" id="israeli-count">0</span>
                 </div>
                 <div class="news-grid" id="feed-israeli">
@@ -963,294 +1097,183 @@
                 </div>
             </div>
 
-            <!-- RUSSIAN / CHINESE Section -->
-            <div class="feed-section" id="section-russian">
+            <!-- TELEGRAM / GOOGLE Section -->
+            <div class="feed-section" id="section-telegram">
                 <div class="section-header">
-                    <h2>🇷🇺🇨🇳 מקורות רוסיים וסיניים</h2>
-                    <span class="count" id="russian-count">0</span>
+                    <h2>■ טלגרם / גוגל ניוז / או"ם</h2>
+                    <span class="count" id="telegram-count">0</span>
                 </div>
-                <div class="news-grid" id="feed-russian">
-                    <div class="loading"><div class="spinner"></div>טוען מ-RT, TASS, Xinhua...</div>
+                <div class="news-grid" id="feed-telegram">
+                    <div class="loading"><div class="spinner"></div>טוען מטלגרם, גוגל ניוז...</div>
                 </div>
             </div>
+
         </div>
 
         <!-- LEFT SIDEBAR -->
         <div class="sidebar">
             <!-- Direct Links Grid -->
             <div class="sidebar-card">
-                <h3>⚡ גישה מהירה - שידור חי</h3>
+                <h3>◈ שידור חי — LIVE</h3>
                 <div class="direct-links-grid">
-                    <a class="direct-link" href="https://www.aljazeera.com/news/liveblog/2026/3/10/iran-war-live-trump-says-conflict-will-be-over-soon-40-killed-in-tehran" target="_blank">
-                        <span class="link-flag">📡</span>Al Jazeera LIVE
-                    </a>
                     <a class="direct-link" href="https://www.presstv.ir/LIVE" target="_blank">
-                        <span class="link-flag">🇮🇷</span>Press TV LIVE
+                        <img class="link-thumb" src="https://www.google.com/s2/favicons?domain=presstv.ir&sz=128" alt="Press TV">
+                        <span class="live-badge">LIVE</span>
+                        <div class="link-info">
+                            <span class="link-name">Press TV — שידור חי</span>
+                            <span class="link-desc">תקשורת ממלכתית איראנית</span>
+                        </div>
                     </a>
                     <a class="direct-link" href="https://www.iranintl.com/en" target="_blank">
-                        <span class="link-flag">📺</span>Iran Intl LIVE
+                        <img class="link-thumb" src="https://www.google.com/s2/favicons?domain=iranintl.com&sz=128" alt="Iran International">
+                        <span class="live-badge">LIVE</span>
+                        <div class="link-info">
+                            <span class="link-name">Iran International</span>
+                            <span class="link-desc">מקור עצמאי — לונדון</span>
+                        </div>
                     </a>
                     <a class="direct-link" href="https://www.livenowfox.com/news/live-updates-russia-helping-iran-war-death-toll-rises" target="_blank">
-                        <span class="link-flag">🇺🇸</span>FOX LIVE
+                        <img class="link-thumb" src="https://www.google.com/s2/favicons?domain=foxnews.com&sz=128" alt="FOX News">
+                        <span class="live-badge">LIVE</span>
+                        <div class="link-info">
+                            <span class="link-name">FOX News — Live Updates</span>
+                            <span class="link-desc">סיקור אמריקאי</span>
+                        </div>
                     </a>
                     <a class="direct-link" href="https://www.bbc.com/news/topics/c302m85q5ljt" target="_blank">
-                        <span class="link-flag">🇬🇧</span>BBC Iran
+                        <img class="link-thumb" src="https://www.google.com/s2/favicons?domain=bbc.com&sz=128" alt="BBC">
+                        <span class="live-badge">LIVE</span>
+                        <div class="link-info">
+                            <span class="link-name">BBC News — Iran Coverage</span>
+                            <span class="link-desc">סיקור בריטי</span>
+                        </div>
                     </a>
                     <a class="direct-link" href="https://en.wikipedia.org/wiki/2026_Iran_war" target="_blank">
-                        <span class="link-flag">📚</span>ויקיפדיה
+                        <img class="link-thumb" src="https://www.google.com/s2/favicons?domain=wikipedia.org&sz=128" alt="Wikipedia">
+                        <div class="link-info">
+                            <span class="link-name">Wikipedia — 2026 Iran War</span>
+                            <span class="link-desc">ערך אנציקלופדי מתעדכן</span>
+                        </div>
                     </a>
                     <a class="direct-link" href="https://www.britannica.com/event/2026-Iran-Conflict" target="_blank">
-                        <span class="link-flag">📖</span>בריטניקה
+                        <img class="link-thumb" src="https://www.google.com/s2/favicons?domain=britannica.com&sz=128" alt="Britannica">
+                        <div class="link-info">
+                            <span class="link-name">Britannica — Iran Conflict</span>
+                            <span class="link-desc">ניתוח אנציקלופדי</span>
+                        </div>
                     </a>
                     <a class="direct-link" href="https://acleddata.com/iran-crisis-live" target="_blank">
-                        <span class="link-flag">📊</span>ACLED DATA
+                        <img class="link-thumb" src="https://www.google.com/s2/favicons?domain=acleddata.com&sz=128" alt="ACLED">
+                        <div class="link-info">
+                            <span class="link-name">ACLED DATA — Crisis Tracker</span>
+                            <span class="link-desc">מיפוי אירועי לחימה</span>
+                        </div>
                     </a>
                 </div>
             </div>
 
-            <!-- International Sources -->
+            <!-- Useful Tools & Maps -->
             <div class="sidebar-card">
-                <h3>🌐 מקורות מערביים מובילים</h3>
+                <h3>◈ כלים ומפות</h3>
                 <ul class="source-list">
-                    <li><a href="https://www.bbc.com/news/topics/c302m85q5ljt" target="_blank"><span class="badge badge-intl">בינלאומי</span> BBC News - Iran</a></li>
-                    <li><a href="https://www.cnn.com/middleeast" target="_blank"><span class="badge badge-intl">בינלאומי</span> CNN Middle East</a></li>
-                    <li><a href="https://www.reuters.com/world/middle-east/" target="_blank"><span class="badge badge-intl">בינלאומי</span> Reuters</a></li>
-                    <li><a href="https://www.npr.org/sections/world/" target="_blank"><span class="badge badge-intl">בינלאומי</span> NPR</a></li>
-                    <li><a href="https://www.nytimes.com/topic/destination/iran" target="_blank"><span class="badge badge-intl">בינלאומי</span> NY Times</a></li>
-                    <li><a href="https://www.washingtonpost.com/world/" target="_blank"><span class="badge badge-intl">בינלאומי</span> Washington Post</a></li>
-                    <li><a href="https://www.theguardian.com/world/iran" target="_blank"><span class="badge badge-intl">בינלאומי</span> The Guardian</a></li>
-                    <li><a href="https://www.pbs.org/newshour/tag/iran" target="_blank"><span class="badge badge-intl">בינלאומי</span> PBS NewsHour</a></li>
-                    <li><a href="https://apnews.com/hub/iran" target="_blank"><span class="badge badge-intl">בינלאומי</span> AP News</a></li>
-                    <li><a href="https://www.france24.com/en/tag/iran/" target="_blank"><span class="badge badge-intl">בינלאומי</span> France 24</a></li>
-                    <li><a href="https://www.dw.com/en/iran/t-17328037" target="_blank"><span class="badge badge-intl">בינלאומי</span> DW (גרמניה)</a></li>
+                    <li><a href="https://acleddata.com/iran-crisis-live" target="_blank"><span class="badge badge-intl">מפה</span> ACLED — מפת אירועי לחימה</a></li>
+                    <li><a href="https://liveuamap.com/en/2026/10-march-iran" target="_blank"><span class="badge badge-intl">מפה</span> LiveUAMap — מפה חיה</a></li>
+                    <li><a href="https://www.flightradar24.com/32.43,53.68/6" target="_blank"><span class="badge badge-intl">טיסות</span> Flightradar24 — איראן</a></li>
+                    <li><a href="https://www.marinetraffic.com/en/ais/home/centerx:56.3/centery:26.6/zoom:7" target="_blank"><span class="badge badge-intl">ספנות</span> MarineTraffic — מצר הורמוז</a></li>
                 </ul>
             </div>
 
-            <!-- Arabic / Middle East Sources -->
+            <!-- Research & Analysis -->
             <div class="sidebar-card">
-                <h3>🕌 מקורות ערביים / מזרח תיכוניים</h3>
+                <h3>◈ מחקר וניתוח</h3>
                 <ul class="source-list">
-                    <li><a href="https://www.aljazeera.com/where/iran/" target="_blank"><span class="badge badge-intl">קטאר</span> Al Jazeera</a></li>
-                    <li><a href="https://www.middleeasteye.net/" target="_blank"><span class="badge badge-intl">בריטניה</span> Middle East Eye</a></li>
-                    <li><a href="https://www.al-monitor.com/" target="_blank"><span class="badge badge-intl">ארה"ב</span> Al-Monitor</a></li>
-                    <li><a href="https://english.alarabiya.net/" target="_blank"><span class="badge badge-intl">סעודיה</span> Al Arabiya</a></li>
-                    <li><a href="https://www.newsnow.com/us/World/Middle+East/Iran" target="_blank"><span class="badge badge-intl">אגרגטור</span> NewsNow Iran</a></li>
-                    <li><a href="https://www.crisisgroup.org/middle-east-north-africa/gulf-and-arabian-peninsula/iran" target="_blank"><span class="badge badge-intl">מחקר</span> Crisis Group</a></li>
+                    <li><a href="https://www.crisisgroup.org/middle-east-north-africa/gulf-and-arabian-peninsula/iran" target="_blank"><span class="badge badge-intl">מחקר</span> Crisis Group — איראן</a></li>
+                    <li><a href="https://www.inss.org.il/" target="_blank"><span class="badge badge-israeli">מחקר</span> INSS — מחקר לביטחון לאומי</a></li>
+                    <li><a href="https://israel-alma.org/" target="_blank"><span class="badge badge-israeli">מחקר</span> Alma Center — החזית הצפונית</a></li>
+                    <li><a href="https://en.wikipedia.org/wiki/2026_Iran_war" target="_blank"><span class="badge badge-intl">ויקי</span> Wikipedia — 2026 Iran War</a></li>
+                    <li><a href="https://www.britannica.com/event/2026-Iran-Conflict" target="_blank"><span class="badge badge-intl">ויקי</span> Britannica — Iran Conflict</a></li>
                 </ul>
             </div>
 
-            <!-- Israeli Sources -->
+            <!-- Emergency & Alerts -->
             <div class="sidebar-card">
-                <h3>🇮🇱 מקורות ישראליים</h3>
+                <h3>◈ חירום והתרעות</h3>
                 <ul class="source-list">
-                    <li><a href="https://www.ynet.co.il/home/0,7340,L-8,00.html" target="_blank"><span class="badge badge-israeli">ישראלי</span> Ynet</a></li>
-                    <li><a href="https://www.haaretz.co.il/" target="_blank"><span class="badge badge-israeli">ישראלי</span> הארץ</a></li>
-                    <li><a href="https://www.jpost.com/" target="_blank"><span class="badge badge-israeli">ישראלי</span> Jerusalem Post</a></li>
-                    <li><a href="https://www.timesofisrael.com/" target="_blank"><span class="badge badge-israeli">ישראלי</span> Times of Israel</a></li>
-                    <li><a href="https://www.mako.co.il/news-military" target="_blank"><span class="badge badge-israeli">ישראלי</span> מאקו צבאי</a></li>
-                    <li><a href="https://www.kan.org.il/" target="_blank"><span class="badge badge-israeli">ישראלי</span> כאן חדשות</a></li>
-                    <li><a href="https://www.israelhayom.co.il/" target="_blank"><span class="badge badge-israeli">ישראלי</span> ישראל היום</a></li>
-                    <li><a href="https://israel-alma.org/" target="_blank"><span class="badge badge-israeli">מחקר</span> Alma Center</a></li>
+                    <li><a href="https://www.oref.org.il/" target="_blank"><span class="badge badge-israeli">התרעה</span> פיקוד העורף — התרעות</a></li>
+                    <li><a href="https://www.idf.il/en/" target="_blank"><span class="badge badge-israeli">צה"ל</span> IDF — עדכונים רשמיים</a></li>
+                    <li><a href="https://t.me/tzaborned" target="_blank"><span class="badge badge-israeli">טלגרם</span> צבע אדום — התרעות</a></li>
+                    <li><a href="https://news.google.com/search?q=iran+war+2026&hl=iw&gl=IL" target="_blank"><span class="badge badge-intl">חיפוש</span> Google News — מלחמת איראן</a></li>
                 </ul>
             </div>
 
-            <!-- Russian/Chinese Sources -->
-            <div class="sidebar-card">
-                <h3>🇷🇺🇨🇳 מקורות רוסיים וסיניים</h3>
-                <ul class="source-list">
-                    <li><a href="https://www.rt.com/news/" target="_blank"><span class="badge badge-state">ממלכתי</span> RT (רוסיה)</a></li>
-                    <li><a href="https://tass.com/world" target="_blank"><span class="badge badge-state">ממלכתי</span> TASS</a></li>
-                    <li><a href="https://english.news.cn/" target="_blank"><span class="badge badge-state">ממלכתי</span> Xinhua (סין)</a></li>
-                    <li><a href="https://www.globaltimes.cn/" target="_blank"><span class="badge badge-state">ממלכתי</span> Global Times</a></li>
-                </ul>
-            </div>
         </div>
     </div>
 
-    <!-- REFRESH BUTTON -->
-    <button class="refresh-btn" onclick="refreshAll()" title="רענן הכל">↻</button>
-
     <!-- FOOTER -->
     <footer>
-        <p class="disclaimer">⚠️ הצהרה: אתר זה מאגד חדשות ממקורות מגוונים ברחבי העולם. המידע המוצג משקף את עמדות המקורות המקוריים ואינו מייצג בהכרח עמדה עצמאית. תקשורת ממלכתית (איראנית, רוסית, סינית) עשויה לשקף פרופגנדה. מומלץ לצלוב מידע ממספר מקורות.</p>
-        <p>מקורות: Press TV | IRNA | Fars News | Mehr News | Tasnim | Iran International | IranWire | Radio Farda | Al Jazeera | BBC | CNN | Reuters | NPR | NY Times | Guardian | France 24 | DW | Al Arabiya | Middle East Eye | Al-Monitor | Ynet | Haaretz | Jerusalem Post | Times of Israel | RT | TASS | Xinhua | ACLED | Crisis Group | Britannica</p>
-        <p style="margin-top:10px; font-size:11px">נבנה ב-10 במרץ 2026 | עדכון אוטומטי כל 10 דקות</p>
+        <p class="disclaimer">הצהרה: אתר זה מאגד חדשות ממקורות מגוונים ברחבי העולם. המידע המוצג משקף את עמדות המקורות המקוריים ואינו מייצג בהכרח עמדה עצמאית. תקשורת ממלכתית (איראנית) עשויה לשקף פרופגנדה. מומלץ לצלוב מידע ממספר מקורות.</p>
+        <p>מקורות: Press TV | IRNA | Fars News | Mehr News | Tehran Times | Tasnim | Iran Press | Iran International | IranWire | Radio Farda | Kayhan Life | Al Jazeera | Middle East Eye | Al Arabiya | Al-Monitor | BBC | CNN | NPR | France 24 | DW | The Guardian | PBS | Jerusalem Post | Times of Israel | Ynetnews | Ynet | i24 News | Haaretz | Israel Hayom | Maariv | Walla | Arutz Sheva | JNS | IDF Official | Alma Center | INSS | Google News | UN News | Middle East Monitor | ACLED | Crisis Group | Britannica</p>
+        <p style="margin-top:10px; font-size:11px">כל הזכויות שמורות שי כחלון</p>
     </footer>
 
     <script>
-        // =============================================
-        // RSS FEED SOURCES CONFIGURATION
-        // =============================================
-        const RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
-        const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
-
-        const FEEDS = {
-            'iran-state': [
-                { name: 'Press TV', url: 'https://www.presstv.ir/RSS', lang: 'en', country: '🇮🇷' },
-                { name: 'IRNA', url: 'https://en.irna.ir/rss', lang: 'en', country: '🇮🇷' },
-                { name: 'Mehr News', url: 'https://en.mehrnews.com/rss', lang: 'en', country: '🇮🇷' },
-                { name: 'Tehran Times', url: 'https://www.tehrantimes.com/rss', lang: 'en', country: '🇮🇷' },
-                { name: 'Fars News', url: 'https://en.farsnews.ir/rss', lang: 'en', country: '🇮🇷' },
-                { name: 'Iran Press', url: 'https://iranpress.com/rss', lang: 'en', country: '🇮🇷' },
-            ],
-            'iran-independent': [
-                { name: 'Iran International', url: 'https://www.iranintl.com/en/rss', lang: 'en', country: '🇮🇷' },
-                { name: 'IranWire', url: 'https://iranwire.com/en/feed/', lang: 'en', country: '🇮🇷' },
-                { name: 'Radio Farda', url: 'https://en.radiofarda.com/api/zrqiteuuir', lang: 'en', country: '🇮🇷' },
-                { name: 'Kayhan Life', url: 'https://kayhanlife.com/feed/', lang: 'en', country: '🇮🇷' },
-            ],
-            'arabic': [
-                { name: 'Al Jazeera', url: 'https://www.aljazeera.com/xml/rss/all.xml', lang: 'en', country: '🇶🇦' },
-                { name: 'Middle East Eye', url: 'https://www.middleeasteye.net/rss', lang: 'en', country: '🇬🇧' },
-                { name: 'Al Arabiya', url: 'https://english.alarabiya.net/tools/rss', lang: 'en', country: '🇸🇦' },
-                { name: 'Al-Monitor', url: 'https://www.al-monitor.com/rss', lang: 'en', country: '🇺🇸' },
-            ],
-            'western': [
-                { name: 'BBC News', url: 'https://feeds.bbci.co.uk/news/world/middle_east/rss.xml', lang: 'en', country: '🇬🇧' },
-                { name: 'CNN', url: 'http://rss.cnn.com/rss/edition_meast.rss', lang: 'en', country: '🇺🇸' },
-                { name: 'Reuters', url: 'https://www.reutersagency.com/feed/', lang: 'en', country: '🇬🇧' },
-                { name: 'NPR', url: 'https://feeds.npr.org/1004/rss.xml', lang: 'en', country: '🇺🇸' },
-                { name: 'France 24', url: 'https://www.france24.com/en/middle-east/rss', lang: 'en', country: '🇫🇷' },
-                { name: 'DW', url: 'https://rss.dw.com/rdf/rss-en-world', lang: 'en', country: '🇩🇪' },
-                { name: 'PBS', url: 'https://www.pbs.org/newshour/feeds/rss/world', lang: 'en', country: '🇺🇸' },
-                { name: 'AP News', url: 'https://rsshub.app/apnews/topics/apf-intlnews', lang: 'en', country: '🇺🇸' },
-                { name: 'The Guardian', url: 'https://www.theguardian.com/world/iran/rss', lang: 'en', country: '🇬🇧' },
-            ],
-            'israeli': [
-                { name: 'Jerusalem Post', url: 'https://www.jpost.com/rss/rssfeedsmiddleeast', lang: 'en', country: '🇮🇱' },
-                { name: 'Times of Israel', url: 'https://www.timesofisrael.com/feed/', lang: 'en', country: '🇮🇱' },
-                { name: 'Haaretz', url: 'https://www.haaretz.com/srv/haaretz-latest-headlines', lang: 'en', country: '🇮🇱' },
-                { name: 'Ynet', url: 'https://www.ynetnews.com/Integration/StoryRss2.html', lang: 'en', country: '🇮🇱' },
-                { name: 'i24 News', url: 'https://www.i24news.tv/en/rss', lang: 'en', country: '🇮🇱' },
-            ],
-            'russian': [
-                { name: 'RT', url: 'https://www.rt.com/rss/news/', lang: 'en', country: '🇷🇺' },
-                { name: 'TASS', url: 'https://tass.com/rss/v2.xml', lang: 'en', country: '🇷🇺' },
-                { name: 'Xinhua', url: 'https://rsshub.app/xinhua/english/world', lang: 'en', country: '🇨🇳' },
-                { name: 'Global Times', url: 'https://www.globaltimes.cn/rss/outbrain.xml', lang: 'en', country: '🇨🇳' },
-            ]
-        };
-
-        // Iran-related keywords for filtering
-        const IRAN_KEYWORDS = [
-            'iran', 'iranian', 'tehran', 'isfahan', 'tabriz', 'shiraz',
-            'khamenei', 'mojtaba', 'irgc', 'revolutionary guard', 'quds force',
-            'hezbollah', 'hezballah', 'hizbullah',
-            'nuclear', 'enrichment', 'natanz', 'fordow',
-            'strait of hormuz', 'persian gulf',
-            'proxy', 'militia', 'houthi',
-            'israel', 'idf', 'netanyahu', 'gallant',
-            'trump', 'pentagon', 'centcom',
-            'missile', 'drone', 'ballistic',
-            'sanction', 'oil price', 'crude oil',
-            'war', 'strike', 'attack', 'bomb', 'raid',
-            'casualt', 'killed', 'dead', 'wounded',
-            'ceasefire', 'surrender', 'negotiat',
-            'beirut', 'lebanon', 'syria', 'iraq',
-            'middle east', 'mideast',
-            'epic fury', 'operation'
-        ];
-
+        const CATEGORIES = ['iran-state', 'iran-independent', 'arabic', 'western', 'israeli', 'telegram'];
         let allArticles = [];
-        let autoTranslate = true;
 
         // =============================================
-        // FETCH RSS FEEDS
+        // FETCH FROM SERVER API
         // =============================================
-        async function fetchFeed(feed) {
-            const endpoints = [
-                `${RSS_API}${encodeURIComponent(feed.url)}&count=20`,
-                `${CORS_PROXY}${encodeURIComponent(feed.url)}`
-            ];
+        async function loadAllFeeds(forceRefresh = false) {
+            const url = forceRefresh ? '/api/refresh' : '/api/feeds';
 
-            for (const endpoint of endpoints) {
-                try {
-                    const response = await fetch(endpoint, { signal: AbortSignal.timeout(10000) });
-                    if (!response.ok) continue;
-
-                    const contentType = response.headers.get('content-type') || '';
-                    let articles = [];
-
-                    if (contentType.includes('json') || endpoint.includes('rss2json')) {
-                        const data = await response.json();
-                        if (data.items) {
-                            articles = data.items.map(item => ({
-                                title: item.title || '',
-                                description: stripHtml(item.description || item.content || ''),
-                                link: item.link || item.guid || '',
-                                pubDate: item.pubDate || item.published || '',
-                                source: feed.name,
-                                country: feed.country,
-                                lang: feed.lang,
-                                category: Object.keys(FEEDS).find(k =>
-                                    FEEDS[k].some(f => f.name === feed.name)
-                                ) || 'western'
-                            }));
-                        }
-                    } else {
-                        const text = await response.text();
-                        articles = parseXML(text, feed);
-                    }
-
-                    // Filter for Iran/war relevance
-                    const filtered = articles.filter(a => {
-                        const text = (a.title + ' ' + a.description).toLowerCase();
-                        return IRAN_KEYWORDS.some(kw => text.includes(kw));
-                    });
-
-                    return filtered.length > 0 ? filtered : articles.slice(0, 5);
-                } catch (e) {
-                    continue;
-                }
-            }
-            return [];
-        }
-
-        function parseXML(xmlText, feed) {
             try {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(xmlText, 'text/xml');
-                const items = doc.querySelectorAll('item, entry');
-                const articles = [];
+                const response = await fetch(url);
+                const data = await response.json();
 
-                items.forEach(item => {
-                    const title = item.querySelector('title')?.textContent || '';
-                    const desc = item.querySelector('description, summary, content')?.textContent || '';
-                    const link = item.querySelector('link')?.textContent ||
-                                 item.querySelector('link')?.getAttribute('href') || '';
-                    const date = item.querySelector('pubDate, published, updated, date')?.textContent || '';
+                if (!data.success) {
+                    showError('שגיאה בטעינת כתבות מהשרת');
+                    return;
+                }
 
-                    articles.push({
-                        title: stripHtml(title),
-                        description: stripHtml(desc).substring(0, 300),
-                        link: link,
-                        pubDate: date,
-                        source: feed.name,
-                        country: feed.country,
-                        lang: feed.lang,
-                        category: Object.keys(FEEDS).find(k =>
-                            FEEDS[k].some(f => f.name === feed.name)
-                        ) || 'western'
-                    });
+                allArticles = [];
+                let totalLoaded = 0;
+
+                for (const category of CATEGORIES) {
+                    const articles = data.feeds[category] || [];
+
+                    // Render category feed
+                    renderArticles(articles, `feed-${category}`);
+
+                    // Update count badge
+                    const countEl = document.getElementById(`${category}-count`);
+                    if (countEl) countEl.textContent = articles.length;
+
+                    totalLoaded += articles.length;
+                    allArticles = allArticles.concat(articles);
+                }
+
+                // Sort all by date
+                allArticles.sort((a, b) => {
+                    try { return new Date(b.pubDate) - new Date(a.pubDate); }
+                    catch { return 0; }
                 });
 
-                return articles;
-            } catch (e) {
-                return [];
+                renderArticles(allArticles, 'feed-all');
+                document.getElementById('all-count').textContent = allArticles.length;
+                document.getElementById('source-count').textContent = totalLoaded;
+                document.getElementById('update-time').textContent = new Date().toLocaleTimeString('he-IL');
+
+            } catch (err) {
+                console.error('Failed to load feeds:', err);
+                showError('שגיאת רשת. מנסה שוב...');
+                // Retry once after 5 seconds
+                setTimeout(() => loadAllFeeds(forceRefresh), 5000);
             }
         }
 
-        function stripHtml(html) {
-            const tmp = document.createElement('div');
-            tmp.innerHTML = html;
-            return tmp.textContent || tmp.innerText || '';
-        }
-
-        // =============================================
-        // GOOGLE TRANSLATE (FREE URL-BASED)
-        // =============================================
-        function getTranslateUrl(text, from = 'auto', to = 'he') {
-            return `https://translate.google.com/?sl=${from}&tl=${to}&text=${encodeURIComponent(text)}&op=translate`;
+        function showError(msg) {
+            const el = document.getElementById('feed-all');
+            if (el) el.innerHTML = `<div class="feed-error">${msg}</div>`;
         }
 
         // =============================================
@@ -1271,102 +1294,64 @@
             container.innerHTML = articles.map((article, i) => {
                 const timeAgo = getTimeAgo(article.pubDate);
                 const isFeatured = i === 0 ? 'featured' : '';
-                const translateLink = getTranslateUrl(article.title + '. ' + article.description);
+                const safeLink = escapeAttr(article.link);
+
+                const title = article.title;
+                const desc = article.description;
 
                 return `
-                    <div class="news-card ${isFeatured}" onclick="window.open('${escapeHtml(article.link)}', '_blank')">
+                    <div class="news-card ${isFeatured}" data-url="${escapeHtml(article.link || '')}">
                         <div class="source-tag">
-                            ${article.country} ${escapeHtml(article.source)}
+                            ${article.country || ''} ${escapeHtml(article.source)}
                             <span class="time">${timeAgo}</span>
                         </div>
-                        <h4>${escapeHtml(article.title)}</h4>
-                        <p>${escapeHtml(article.description)}</p>
+                        <h4>${escapeHtml(title)}</h4>
+                        <p>${escapeHtml(desc)}</p>
                         <div class="card-footer">
-                            <span class="read-more">קרא עוד ←</span>
-                            <button class="translate-btn" onclick="event.stopPropagation(); window.open('${translateLink}', '_blank')">
-                                תרגם לעברית 🔄
-                            </button>
+                            <span class="read-more">קרא עוד</span>
                         </div>
                     </div>`;
             }).join('');
         }
 
         function escapeHtml(text) {
+            if (!text) return '';
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
-        function getTimeAgo(dateStr) {
-            if (!dateStr) return 'לא ידוע';
-            try {
-                const date = new Date(dateStr);
-                const now = new Date();
-                const diff = Math.floor((now - date) / 1000);
-
-                if (diff < 60) return 'לפני רגע';
-                if (diff < 3600) return `לפני ${Math.floor(diff / 60)} דקות`;
-                if (diff < 86400) return `לפני ${Math.floor(diff / 3600)} שעות`;
-                if (diff < 604800) return `לפני ${Math.floor(diff / 86400)} ימים`;
-                return date.toLocaleDateString('he-IL');
-            } catch {
-                return dateStr;
-            }
+        function escapeAttr(text) {
+            if (!text) return '';
+            // Block dangerous URI schemes
+            const lower = text.trim().toLowerCase();
+            if (lower.startsWith('javascript:') || lower.startsWith('data:') || lower.startsWith('vbscript:')) return '';
+            return text.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
 
-        // =============================================
-        // MAIN LOAD FUNCTION
-        // =============================================
-        async function loadAllFeeds() {
-            allArticles = [];
-            let totalLoaded = 0;
+        function getTimeAgo(dateStr) {
+            if (!dateStr) return '';
+            try {
+                const date = new Date(dateStr);
+                if (isNaN(date)) return '';
+                const now = new Date();
+                const diffSec = Math.max(0, Math.floor((now - date) / 1000));
 
-            const categoryPromises = Object.entries(FEEDS).map(async ([category, feeds]) => {
-                const feedPromises = feeds.map(feed => fetchFeed(feed));
-                const results = await Promise.allSettled(feedPromises);
+                const mins = Math.floor(diffSec / 60);
+                const hours = Math.floor(diffSec / 3600);
+                const days = Math.floor(diffSec / 86400);
 
-                let categoryArticles = [];
-                results.forEach(result => {
-                    if (result.status === 'fulfilled' && result.value.length > 0) {
-                        categoryArticles = categoryArticles.concat(result.value);
-                    }
-                });
-
-                // Sort by date
-                categoryArticles.sort((a, b) => {
-                    try {
-                        return new Date(b.pubDate) - new Date(a.pubDate);
-                    } catch {
-                        return 0;
-                    }
-                });
-
-                // Render category
-                renderArticles(categoryArticles, `feed-${category}`);
-
-                // Update count
-                const countEl = document.getElementById(`${category}-count`);
-                if (countEl) countEl.textContent = categoryArticles.length;
-
-                totalLoaded += categoryArticles.length;
-                allArticles = allArticles.concat(categoryArticles);
-            });
-
-            await Promise.allSettled(categoryPromises);
-
-            // Sort all articles by date and render
-            allArticles.sort((a, b) => {
-                try {
-                    return new Date(b.pubDate) - new Date(a.pubDate);
-                } catch {
-                    return 0;
-                }
-            });
-
-            renderArticles(allArticles, 'feed-all');
-            document.getElementById('all-count').textContent = allArticles.length;
-            document.getElementById('source-count').textContent = totalLoaded;
-            document.getElementById('update-time').textContent = new Date().toLocaleTimeString('he-IL');
+                if (mins < 1) return 'עכשיו';
+                if (mins === 1) return 'לפני דקה';
+                if (mins < 60) return `לפני ${mins} דקות`;
+                if (hours === 1) return 'לפני שעה';
+                if (hours < 24) return `לפני ${hours} שעות`;
+                if (days === 1) return 'לפני יום';
+                if (days < 7) return `לפני ${days} ימים`;
+                return date.toLocaleDateString('he-IL');
+            } catch {
+                return '';
+            }
         }
 
         // =============================================
@@ -1390,6 +1375,7 @@
             const query = document.getElementById('search-input').value.toLowerCase().trim();
             if (!query) {
                 renderArticles(allArticles, 'feed-all');
+                document.getElementById('all-count').textContent = allArticles.length;
                 return;
             }
 
@@ -1412,13 +1398,37 @@
             if (e.key === 'Enter') filterNews();
         });
 
+        function reRenderAll() {
+            for (const category of CATEGORIES) {
+                const articles = allArticles.filter(a => a.category === category);
+                renderArticles(articles, `feed-${category}`);
+            }
+            renderArticles(allArticles, 'feed-all');
+        }
+
         // =============================================
-        // TRANSLATE TOGGLE
+        // TRANSLATION STATUS POLLING
         // =============================================
-        function toggleTranslate() {
-            const toggle = document.getElementById('auto-translate');
-            autoTranslate = !autoTranslate;
-            toggle.classList.toggle('active');
+        let lastTranslateDone = 0;
+        async function pollTranslateStatus() {
+            try {
+                const res = await fetch('/api/translate-status');
+                const status = await res.json();
+
+                if (status.inProgress) {
+                    if (status.done - lastTranslateDone >= 30) {
+                        lastTranslateDone = status.done;
+                        await loadAllFeeds();
+                    }
+                } else if (status.done > 0) {
+                    if (status.done !== lastTranslateDone) {
+                        lastTranslateDone = status.done;
+                        await loadAllFeeds();
+                    }
+                    return;
+                }
+            } catch (e) {}
+            setTimeout(pollTranslateStatus, 5000);
         }
 
         // =============================================
@@ -1428,24 +1438,173 @@
             const btn = document.querySelector('.refresh-btn');
             btn.classList.add('spinning');
 
-            // Reset feeds with loading
-            Object.keys(FEEDS).forEach(cat => {
+            // Show loading in all feeds
+            CATEGORIES.forEach(cat => {
                 const el = document.getElementById(`feed-${cat}`);
                 if (el) el.innerHTML = '<div class="loading"><div class="spinner"></div>מרענן...</div>';
             });
             document.getElementById('feed-all').innerHTML = '<div class="loading"><div class="spinner"></div>טוען כתבות מכל העולם...</div>';
 
-            await loadAllFeeds();
+            await loadAllFeeds(true); // force refresh server cache
             btn.classList.remove('spinning');
+        }
+
+        // =============================================
+        // TELEGRAM BADGE
+        // =============================================
+        async function initTelegramBadge() {
+            try {
+                const res = await fetch('/api/telegram-channel');
+                const data = await res.json();
+                if (data.channel) {
+                    const username = data.channel.replace('@', '');
+                    const url = `https://t.me/${username}`;
+                    document.getElementById('telegram-header-badge').href = url;
+                    document.getElementById('telegram-float-badge').href = url;
+                }
+            } catch (e) {}
         }
 
         // =============================================
         // INIT
         // =============================================
-        loadAllFeeds();
+        loadAllFeeds().then(() => {
+            // Start polling translation progress
+            setTimeout(pollTranslateStatus, 3000);
+        });
+        initTelegramBadge();
 
-        // Auto-refresh every 10 minutes
-        setInterval(loadAllFeeds, 10 * 60 * 1000);
+        // Auto-refresh every 2 minutes
+        setInterval(() => loadAllFeeds(), 2 * 60 * 1000);
+
+        // Dynamic war day counter
+        function updateWarDays() {
+            const warStart = new Date('2026-02-28T00:00:00Z');
+            const now = new Date();
+            const days = Math.floor((now - warStart) / (1000 * 60 * 60 * 24)) + 1;
+            document.getElementById('war-days').textContent = days;
+        }
+        updateWarDays();
+        setInterval(updateWarDays, 60 * 1000);
+
+        // Dynamic ticker — fetch top headlines every 10 minutes
+        async function updateTicker() {
+            try {
+                const res = await fetch('/api/ticker');
+                const data = await res.json();
+                const el = document.getElementById('ticker-content');
+                if (data.ticker && data.ticker.length > 0) {
+                    el.innerHTML = '';
+                    data.ticker.forEach(t => {
+                        const span = document.createElement('span');
+                        span.textContent = t;
+                        el.appendChild(span);
+                    });
+                    // Slow readable speed — scale with content length
+                    const totalChars = data.ticker.reduce((s, t) => s + t.length, 0);
+                    const speed = Math.max(60, Math.min(120, totalChars / 4));
+                    el.style.animationDuration = speed + 's';
+                }
+            } catch (e) { console.error('Ticker fetch failed:', e); }
+        }
+        updateTicker();
+        setInterval(updateTicker, 10 * 60 * 1000);
+
+        // Auto-updating timeline
+        async function updateTimeline() {
+            try {
+                const res = await fetch('/api/timeline');
+                const data = await res.json();
+                const container = document.getElementById('timeline-container');
+                if (data.timeline && data.timeline.length > 0 && container) {
+                    container.innerHTML = '';
+                    data.timeline.forEach(entry => {
+                        const div = document.createElement('div');
+                        div.className = 'timeline-item';
+                        div.innerHTML = `<div class="time">${entry.date}</div><div class="event">${entry.text}</div>`;
+                        container.appendChild(div);
+                    });
+                }
+            } catch (e) { console.error('Timeline fetch failed:', e); }
+        }
+        updateTimeline();
+        setInterval(updateTimeline, 5 * 60 * 1000); // refresh every 5 minutes
+
+        // Delegated click handler for news cards — safe URL opening
+        document.addEventListener('click', function(e) {
+            const card = e.target.closest('.news-card[data-url]');
+            if (card) {
+                const url = card.getAttribute('data-url');
+                if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+                    window.open(url, '_blank', 'noopener,noreferrer');
+                }
+            }
+        });
+
+        // Live data: casualties + oil price — update every 30 seconds
+        let lastOilPrice = null;
+        async function updateLiveData() {
+            try {
+                const res = await fetch('/api/live-data');
+                const data = await res.json();
+                const fmt = (n) => n != null ? n.toLocaleString() : '--';
+                if (data.casualties) {
+                    const c = data.casualties;
+                    document.getElementById('cas-total-dead').textContent = fmt(c.total_dead);
+                    // Also update the header stat box
+                    const headerKilled = document.getElementById('total-killed');
+                    if (headerKilled && c.total_dead != null) headerKilled.textContent = c.total_dead.toLocaleString();
+                    document.getElementById('cas-iran-dead').textContent = fmt(c.iran_dead);
+                    document.getElementById('cas-iran-injured').textContent = fmt(c.iran_injured);
+                    document.getElementById('cas-lebanon-dead').textContent = fmt(c.lebanon_dead);
+                    document.getElementById('cas-lebanon-injured').textContent = fmt(c.lebanon_injured);
+                    document.getElementById('cas-israel-dead').textContent = fmt(c.israel_dead);
+                    document.getElementById('cas-israel-injured').textContent = fmt(c.israel_injured);
+                    document.getElementById('cas-us-dead').textContent = fmt(c.us_dead);
+                    document.getElementById('cas-us-injured').textContent = fmt(c.us_injured);
+                }
+                const srcCountEl = document.getElementById('cas-source-count');
+                if (srcCountEl) srcCountEl.textContent = data.sourceCount || '--';
+
+                // Oil price with color animation
+                const oilEl = document.getElementById('oil-price-display');
+                const oilTimeEl = document.getElementById('oil-update-time');
+                if (data.oilPrice && oilEl) {
+                    const price = data.oilPrice;
+                    oilEl.textContent = '$' + price.toFixed(2);
+                    // Flash green/red based on change
+                    if (lastOilPrice !== null && price !== lastOilPrice) {
+                        const color = price > lastOilPrice ? '#2ecc71' : '#e74c3c';
+                        const arrow = price > lastOilPrice ? ' ▲' : ' ▼';
+                        oilEl.style.color = color;
+                        oilEl.textContent = '$' + price.toFixed(2) + arrow;
+                        setTimeout(() => { oilEl.style.color = 'var(--accent-gold)'; }, 3000);
+                    }
+                    lastOilPrice = price;
+                    // Update oil price in the ticker bar too
+                    const tickerSpans = document.querySelectorAll('#ticker-content span');
+                    for (const span of tickerSpans) {
+                        if (span.textContent.includes('מחיר הנפט')) {
+                            span.textContent = `מחיר הנפט: $${price.toFixed(2)}`;
+                            break;
+                        }
+                    }
+                    // Show delta from pre-war price
+                    const deltaEl = document.getElementById('oil-delta-display');
+                    if (deltaEl && data.oilDelta) {
+                        const d = parseFloat(data.oilDelta);
+                        const sign = d >= 0 ? '+' : '';
+                        const arrow = d >= 0 ? '▲' : '▼';
+                        const color = d >= 0 ? '#e74c3c' : '#2ecc71';
+                        deltaEl.style.color = color;
+                        deltaEl.textContent = `${arrow} ${sign}${d}% מתחילת המלחמה`;
+                    }
+                    if (oilTimeEl) oilTimeEl.textContent = new Date().toLocaleTimeString('he-IL');
+                }
+            } catch (e) { console.error('Live data fetch failed:', e); }
+        }
+        updateLiveData();
+        setInterval(updateLiveData, 30 * 1000);
     </script>
 </body>
 </html>
