@@ -1629,6 +1629,12 @@ function crossReferenceCasualties(sources) {
         else result[field] = null;
     }
 
+    // Always compute totals as sum of individual countries (don't trust scraped totals)
+    const sumDead = (result.iran_dead || 0) + (result.lebanon_dead || 0) + (result.israel_dead || 0) + (result.us_dead || 0);
+    const sumInjured = (result.iran_injured || 0) + (result.lebanon_injured || 0) + (result.israel_injured || 0) + (result.us_injured || 0);
+    if (sumDead > 0) result.total_dead = sumDead;
+    if (sumInjured > 0) result.total_injured = sumInjured;
+
     return { data: result };
 }
 
