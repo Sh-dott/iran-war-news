@@ -228,12 +228,17 @@ const ENGLISH_EXCLUDE_KEYWORDS = [
     'kneecap',
 ];
 
-function isIranWarRelevant(text, lang) {
+function isIranWarRelevant(text, lang, title) {
     const lower = text.toLowerCase();
+    const titleLower = (title || text.split('\n')[0] || '').toLowerCase();
 
     if (lang === 'he') {
         // Hebrew path: use Hebrew-specific arrays
         const hasExclude = HEBREW_EXCLUDE_KEYWORDS.some(kw => lower.includes(kw));
+        const titleHasExclude = HEBREW_EXCLUDE_KEYWORDS.some(kw => titleLower.includes(kw));
+
+        // If the TITLE itself has exclude keywords, reject — even if description mentions the war in passing
+        if (titleHasExclude) return false;
 
         // 1. Hebrew war-specific core keywords → pass (even with exclude, these are unambiguous)
         if (HEBREW_CORE_KEYWORDS.some(kw => lower.includes(kw))) return true;
@@ -537,7 +542,7 @@ async function fetchSingleFeed(feed) {
         // Filter for Iran/war relevance (two-tier)
         const filtered = recent.filter(a => {
             const text = a.title + ' ' + a.description;
-            return isIranWarRelevant(text, a.lang);
+            return isIranWarRelevant(text, a.lang, a.title);
         });
 
         return filtered;
@@ -1106,7 +1111,7 @@ app.get('/api/feeds', async (req, res) => {
         for (const [category, articles] of Object.entries(feeds)) {
             hebrewFeeds[category] = articles
                 .filter(a => a.lang === 'he' || hasHebrew(a.title_he))
-                .filter(a => isIranWarRelevant((a.title_he || a.title || '') + ' ' + (a.description_he || a.description || ''), a.lang))
+                .filter(a => isIranWarRelevant((a.title_he || a.title || '') + ' ' + (a.description_he || a.description || ''), a.lang, a.title_he || a.title || ''))
                 .map(a => ({
                     ...a,
                     title: hasHebrew(a.title_he) ? a.title_he : a.title,
@@ -1137,6 +1142,7 @@ app.get('/api/refresh', async (req, res) => {
         for (const [category, articles] of Object.entries(feeds)) {
             hebrewFeeds[category] = articles
                 .filter(a => a.lang === 'he' || hasHebrew(a.title_he))
+                .filter(a => isIranWarRelevant((a.title_he || a.title || '') + ' ' + (a.description_he || a.description || ''), a.lang, a.title_he || a.title || ''))
                 .map(a => ({
                     ...a,
                     title: hasHebrew(a.title_he) ? a.title_he : a.title,
