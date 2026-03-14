@@ -20,10 +20,11 @@ echo "=== Installing dependencies ==="
 npm install
 
 echo "=== Creating .env ==="
+echo "IMPORTANT: Fill in your real credentials below before starting the service!"
 cat > .env << 'ENVEOF'
-TELEGRAM_BOT_TOKEN=8681163226:AAEwozm6HUCbYLSbBlq1flKu1S6ShvnWHpU
+TELEGRAM_BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN_HERE
 TELEGRAM_CHANNEL_ID=@iran_war_news_he
-MONGODB_URI=mongodb+srv://shaikahlon1:qdBo9dUtR21rGlBW@cluster0.gwbzyk4.mongodb.net/iran-war-news?retryWrites=true&w=majority&appName=Cluster0
+MONGODB_URI=YOUR_MONGODB_URI_HERE
 ENVEOF
 
 echo "=== Creating systemd service ==="
@@ -62,7 +63,7 @@ ufw --force enable
 echo ""
 echo "========================================="
 echo "  DONE! Your app is running on port 3000"
-echo "  Visit: http://64.176.168.237:3000"
+echo "  Visit: http://YOUR_SERVER_IP:3000"
 echo "========================================="
 echo ""
 systemctl status iran-war-news --no-pager
