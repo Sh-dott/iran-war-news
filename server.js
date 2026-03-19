@@ -995,7 +995,7 @@ function formatOrefTelegramMessage(alert) {
         '',
         `\u200F\u{1F6E1}\uFE0F ${desc}`,
         '',
-        `\u200F\u23F0 ${new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`,
+        `\u200F\u23F0 ${new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Jerusalem' })}`,
     ].join('\n');
 }
 
